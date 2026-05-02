@@ -31,7 +31,7 @@ export default function Footer() {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <div className="relative w-10 h-10 overflow-hidden rounded-xl">
-                <Image src="/logo.png" alt="Rayyan" fill className="object-contain" />
+                <Image src="/web-portfolio/logo.png" alt="Rayyan" fill className="object-contain" />
               </div>
               <span className="font-display text-lg font-800 uppercase tracking-widest text-ink">
                 Rayyan

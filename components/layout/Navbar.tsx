@@ -124,7 +124,7 @@ export default function Navbar() {
             )}
             
             <motion.a
-              href="/web-portfolio/MuhammadYusufArrayyan_UniversitasBengkulu__CV.pdf"
+              href="/web-portfolio/web-portfolio/MuhammadYusufArrayyan_UniversitasBengkulu__CV.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs font-mono uppercase tracking-widest text-ink-secondary hover:text-ink transition-colors duration-300"
@@ -135,7 +135,7 @@ export default function Navbar() {
               CV
             </motion.a>
             <motion.a
-              href="/web-portfolio/MuhammadYusufArrayyan_UniversitasBengkulu_Portfolio.pdf"
+              href="/web-portfolio/web-portfolio/MuhammadYusufArrayyan_UniversitasBengkulu_Portfolio.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs font-mono uppercase tracking-widest text-ink-secondary hover:text-ink transition-colors duration-300"
@@ -232,7 +232,7 @@ export default function Navbar() {
               </motion.div>
               <motion.div className="flex items-center gap-4" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45 }}>
                 <a
-                  href="/web-portfolio/MuhammadYusufArrayyan_UniversitasBengkulu__CV.pdf"
+                  href="/web-portfolio/web-portfolio/MuhammadYusufArrayyan_UniversitasBengkulu__CV.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-secondary text-xs py-3 px-6"
@@ -240,7 +240,7 @@ export default function Navbar() {
                   Download CV
                 </a>
                 <a
-                  href="/web-portfolio/MuhammadYusufArrayyan_UniversitasBengkulu_Portfolio.pdf"
+                  href="/web-portfolio/web-portfolio/MuhammadYusufArrayyan_UniversitasBengkulu_Portfolio.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-primary text-xs py-3 px-6"

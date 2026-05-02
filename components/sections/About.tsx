@@ -53,7 +53,7 @@ export default function About() {
             {/* Profile image */}
             <div className="relative aspect-[4/5] rounded-3xl overflow-hidden">
               <Image
-                src="/profile.jpg"
+                src="/web-portfolio/profile.jpg"
                 alt="Rayyan — Creative Developer"
                 fill
                 className="object-cover grayscale hover:grayscale-0 transition-all duration-1000"
