@@ -186,42 +186,42 @@ export default function Hero() {
         className="top-[18%] left-[4%]"
         rotate={-8}
         delay={0.6}
-        label="Cinematic"
+        label="AksesNonton"
       />
       <FloatingCard
         src="/vid2.mov"
         className="top-[45%] left-[10%]"
         rotate={5}
         delay={0.8}
-        label="Ambassadorship"
+        label="DigSi"
       />
       <FloatingCard
         src="/vid3.mov"
         className="bottom-[8%] left-[4%]"
         rotate={-12}
         delay={1.0}
-        label="Story Telling"
+        label="RyNote"
       />
       <FloatingCard
         src="/vid4.mov"
         className="top-[12%] right-[4%]"
         rotate={9}
         delay={0.7}
-        label="Brand Selling"
+        label="Elok Galo"
       />
       <FloatingCard
         src="/vid5.mp4"
         className="top-[48%] right-[6%]"
         rotate={-6}
         delay={0.9}
-        label="Vlog"
+        label="BeautyScent"
       />
       <FloatingCard
         src="/vid1.mp4"
         className="bottom-[12%] right-[3%]"
         rotate={14}
         delay={1.1}
-        label="Motion"
+        label="Anthfis"
       />
 
       {/* Main content */}
