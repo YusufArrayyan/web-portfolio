@@ -360,7 +360,7 @@ code, pre {
   /* Input */
   .form-input {
     @apply w-full bg-transparent border border-white/10 rounded-2xl px-6 py-4 text-ink placeholder:text-ink-tertiary 
-           text-base font-body focus:outline-none focus:border-accent/50 focus:bg-accent-muted
+           text-base font-body focus:outline-none focus:border-accent focus:bg-accent-muted
            transition-all duration-300;
   }
 
