@@ -1,8 +1,18 @@
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
+import { BASE_PATH } from './constants'
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
+}
+
+/** Prepend base path to asset URLs */
+export function getAssetPath(path: string): string {
+  if (!path) return ''
+  if (path.startsWith('http') || path.startsWith('data:')) return path
+  const cleanPath = path.startsWith('/') ? path : `/${path}`
+  return `${BASE_PATH}${cleanPath}`
 }
 
 /** Split a string into an array of words */

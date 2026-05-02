@@ -6,22 +6,22 @@ import { SectionLabel } from '@/components/shared/AnimatedText'
 import { easing } from '@/lib/animations'
 
 const marqueeItems = [
-  { label: 'UI Design', img: '/projects/aksesnonton_1.png' },
-  { label: 'Branding', img: '/projects/elok_1.png' },
-  { label: 'Motion', img: '/projects/RyNote_1.png' },
-  { label: 'Web Dev', img: '/projects/digsi_1.png' },
-  { label: 'Full-Stack', img: '/projects/anthfis_1.png' },
-  { label: 'Creative', img: '/thumb1.png' },
-  { label: 'Cinematic', img: '/thumb2.png' },
-  { label: 'Editorial', img: '/projects/BeautyScent_1.png' },
+  { label: 'UI Design', img: '/web-portfolio/projects/aksesnonton_1.png' },
+  { label: 'Branding', img: '/web-portfolio/projects/elok_1.png' },
+  { label: 'Motion', img: '/web-portfolio/projects/RyNote_1.png' },
+  { label: 'Web Dev', img: '/web-portfolio/projects/digsi_1.png' },
+  { label: 'Full-Stack', img: '/web-portfolio/projects/anthfis_1.png' },
+  { label: 'Creative', img: '/web-portfolio/thumb1.png' },
+  { label: 'Cinematic', img: '/web-portfolio/thumb2.png' },
+  { label: 'Editorial', img: '/web-portfolio/projects/BeautyScent_1.png' },
 ]
 
 const showcaseVideos = [
-  { src: '/vid1.mp4', label: 'Cinematic', subtitle: 'Visual Storytelling' },
-  { src: '/vid2.mov', label: 'Ambassadorship', subtitle: 'Campus Representation' },
-  { src: '/vid4.mov', label: 'Brand Selling', subtitle: 'Product Campaign' },
-  { src: '/vid3.mov', label: 'Story Telling', subtitle: 'Narrative Vlog' },
-  { src: '/vid5.mp4', label: 'Motion', subtitle: 'Dynamic Editing' },
+  { src: '/web-portfolio/vid1.mp4', label: 'Cinematic', subtitle: 'Visual Storytelling' },
+  { src: '/web-portfolio/vid2.mov', label: 'Ambassadorship', subtitle: 'Campus Representation' },
+  { src: '/web-portfolio/vid4.mov', label: 'Brand Selling', subtitle: 'Product Campaign' },
+  { src: '/web-portfolio/vid3.mov', label: 'Story Telling', subtitle: 'Narrative Vlog' },
+  { src: '/web-portfolio/vid5.mp4', label: 'Motion', subtitle: 'Dynamic Editing' },
 ]
 
 /* ============================================================

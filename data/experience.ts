@@ -19,10 +19,10 @@ export const experienceData: ExperienceItem[] = [
     type: 'Work',
     location: 'Universitas Bengkulu',
     images: [
-      '/Experience/PSDA_1.jpeg',
-      '/Experience/PSDA_2.jpeg',
-      '/Experience/PSDA_3.jpeg',
-      '/Experience/PSDA_4.jpeg',
+      '/web-portfolio/Experience/PSDA_1.jpeg',
+      '/web-portfolio/Experience/PSDA_2.jpeg',
+      '/web-portfolio/Experience/PSDA_3.jpeg',
+      '/web-portfolio/Experience/PSDA_4.jpeg',
     ],
   },
   {
@@ -34,10 +34,10 @@ export const experienceData: ExperienceItem[] = [
     type: 'Organization',
     location: 'Bengkulu',
     images: [
-      '/Experience/Genbi_1.jpeg',
-      '/Experience/Genbi_2.jpeg',
-      '/Experience/Genbi_3.jpeg',
-      '/Experience/Genbi_4.jpeg',
+      '/web-portfolio/Experience/Genbi_1.jpeg',
+      '/web-portfolio/Experience/Genbi_2.jpeg',
+      '/web-portfolio/Experience/Genbi_3.jpeg',
+      '/web-portfolio/Experience/Genbi_4.jpeg',
     ],
   },
   {
@@ -49,9 +49,9 @@ export const experienceData: ExperienceItem[] = [
     type: 'Work',
     location: 'Remote',
     images: [
-      '/Experience/itemku_1.png',
-      '/Experience/itemku_2.jpeg',
-      '/Experience/itemku_3.jpg',
+      '/web-portfolio/Experience/itemku_1.png',
+      '/web-portfolio/Experience/itemku_2.jpeg',
+      '/web-portfolio/Experience/itemku_3.jpg',
     ],
   },
   {
@@ -63,10 +63,10 @@ export const experienceData: ExperienceItem[] = [
     type: 'Work',
     location: 'Universitas Bengkulu',
     images: [
-      '/Experience/GSA_1.jpeg',
-      '/Experience/GSA_2.jpeg',
-      '/Experience/GSA_3.jpeg',
-      '/Experience/GSA_4.jpeg',
+      '/web-portfolio/Experience/GSA_1.jpeg',
+      '/web-portfolio/Experience/GSA_2.jpeg',
+      '/web-portfolio/Experience/GSA_3.jpeg',
+      '/web-portfolio/Experience/GSA_4.jpeg',
     ],
   },
   {
@@ -78,9 +78,9 @@ export const experienceData: ExperienceItem[] = [
     type: 'Work',
     location: 'Remote',
     images: [
-      '/Experience/Kinsure_1.jpeg',
-      '/Experience/Kinsure_2.jpeg',
-      '/Experience/Kinsure_3.jpeg',
+      '/web-portfolio/Experience/Kinsure_1.jpeg',
+      '/web-portfolio/Experience/Kinsure_2.jpeg',
+      '/web-portfolio/Experience/Kinsure_3.jpeg',
     ],
   },
   {
@@ -92,10 +92,10 @@ export const experienceData: ExperienceItem[] = [
     type: 'Work',
     location: 'Remote',
     images: [
-      '/Experience/genz_1.png',
-      '/Experience/genz_2.jpeg',
-      '/Experience/genz_3.jpeg',
-      '/Experience/genz_4.jpeg',
+      '/web-portfolio/Experience/genz_1.png',
+      '/web-portfolio/Experience/genz_2.jpeg',
+      '/web-portfolio/Experience/genz_3.jpeg',
+      '/web-portfolio/Experience/genz_4.jpeg',
     ],
   },
   {
@@ -107,10 +107,10 @@ export const experienceData: ExperienceItem[] = [
     type: 'Organization',
     location: 'Universitas Bengkulu',
     images: [
-      '/Experience/psdm_1.jpeg',
-      '/Experience/psdm_2.jpeg',
-      '/Experience/psdm_3.jpeg',
-      '/Experience/psdm_4.jpeg',
+      '/web-portfolio/Experience/psdm_1.jpeg',
+      '/web-portfolio/Experience/psdm_2.jpeg',
+      '/web-portfolio/Experience/psdm_3.jpeg',
+      '/web-portfolio/Experience/psdm_4.jpeg',
     ],
   },
   {
@@ -122,9 +122,9 @@ export const experienceData: ExperienceItem[] = [
     type: 'Work',
     location: 'Remote',
     images: [
-      '/Experience/popsurvey_1.png',
-      '/Experience/popsurvey_2.jpg',
-      '/Experience/popsurvey_3.jpeg',
+      '/web-portfolio/Experience/popsurvey_1.png',
+      '/web-portfolio/Experience/popsurvey_2.jpg',
+      '/web-portfolio/Experience/popsurvey_3.jpeg',
     ],
   },
   {
@@ -136,8 +136,8 @@ export const experienceData: ExperienceItem[] = [
     type: 'Organization',
     location: 'Universitas Bengkulu',
     images: [
-      '/Experience/Karate_1.jpeg',
-      '/Experience/Karate_2.jpeg',
+      '/web-portfolio/Experience/Karate_1.jpeg',
+      '/web-portfolio/Experience/Karate_2.jpeg',
     ],
   },
   {
@@ -149,10 +149,10 @@ export const experienceData: ExperienceItem[] = [
     type: 'Organization',
     location: 'Bengkulu',
     images: [
-      '/Experience/robo_1.jpeg',
-      '/Experience/robo_2.jpeg',
-      '/Experience/robo_3.jpeg',
-      '/Experience/robo_4.jpeg',
+      '/web-portfolio/Experience/robo_1.jpeg',
+      '/web-portfolio/Experience/robo_2.jpeg',
+      '/web-portfolio/Experience/robo_3.jpeg',
+      '/web-portfolio/Experience/robo_4.jpeg',
     ],
   },
 ]

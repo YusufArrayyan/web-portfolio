@@ -15,7 +15,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'Google',
     category: 'Digital Marketing',
     year: '2024',
-    image: '/Sertif_01.jpg',
+    image: '/web-portfolio/Sertif_01.jpg',
     color: '#4285F4',
   },
   {
@@ -24,7 +24,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'Coursera',
     category: 'Technology',
     year: '2024',
-    image: '/Sertif_02.jpg',
+    image: '/web-portfolio/Sertif_02.jpg',
     color: '#0056D2',
   },
   {
@@ -33,7 +33,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'Google',
     category: 'Design',
     year: '2024',
-    image: '/Sertif_03.jpg',
+    image: '/web-portfolio/Sertif_03.jpg',
     color: '#EA4335',
   },
   {
@@ -42,7 +42,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'Dicoding',
     category: 'Development',
     year: '2024',
-    image: '/Sertif_04.jpg',
+    image: '/web-portfolio/Sertif_04.jpg',
     color: '#1DB954',
   },
   {
@@ -51,7 +51,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'Coursera',
     category: 'Development',
     year: '2024',
-    image: '/Sertif_05.jpg',
+    image: '/web-portfolio/Sertif_05.jpg',
     color: '#61DAFB',
   },
   {
@@ -60,7 +60,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'Codecademy',
     category: 'Development',
     year: '2024',
-    image: '/Sertif_06/Sertif_061.jpg',
+    image: '/web-portfolio/Sertif_06/Sertif_061.jpg',
     color: '#1F4788',
   },
   {
@@ -69,7 +69,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'Google',
     category: 'Data',
     year: '2024',
-    image: '/Sertif_07.jpg',
+    image: '/web-portfolio/Sertif_07.jpg',
     color: '#FBBC04',
   },
   {
@@ -78,7 +78,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'AWS',
     category: 'Cloud',
     year: '2024',
-    image: '/Sertif_08.jpg',
+    image: '/web-portfolio/Sertif_08.jpg',
     color: '#FF9900',
   },
   {
@@ -87,7 +87,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'PMI',
     category: 'Management',
     year: '2024',
-    image: '/Sertif_09.jpg',
+    image: '/web-portfolio/Sertif_09.jpg',
     color: '#005F86',
   },
   {
@@ -96,7 +96,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'Microsoft',
     category: 'Development',
     year: '2023',
-    image: '/Sertif_10.jpg',
+    image: '/web-portfolio/Sertif_10.jpg',
     color: '#3776AB',
   },
   {
@@ -105,7 +105,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'Coursera',
     category: 'AI/ML',
     year: '2023',
-    image: '/Sertif_11.jpg',
+    image: '/web-portfolio/Sertif_11.jpg',
     color: '#FF6F00',
   },
   {
@@ -114,7 +114,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'IBM',
     category: 'Security',
     year: '2023',
-    image: '/Sertif_12/Sertif_121.jpg',
+    image: '/web-portfolio/Sertif_12/Sertif_121.jpg',
     color: '#054ADA',
   },
   {
@@ -123,7 +123,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'freeCodeCamp',
     category: 'Development',
     year: '2023',
-    image: '/Sertif_13.jpg',
+    image: '/web-portfolio/Sertif_13.jpg',
     color: '#F7DF1E',
   },
   {
@@ -132,7 +132,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'freeCodeCamp',
     category: 'Design',
     year: '2023',
-    image: '/Sertif_14.jpg',
+    image: '/web-portfolio/Sertif_14.jpg',
     color: '#0A0A23',
   },
   {
@@ -141,7 +141,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'Kemendikbud',
     category: 'Business',
     year: '2023',
-    image: '/Sertif_15/Sertif_151.jpg',
+    image: '/web-portfolio/Sertif_15/Sertif_151.jpg',
     color: '#D62728',
   },
   {
@@ -150,7 +150,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'Canva',
     category: 'Design',
     year: '2023',
-    image: '/Sertif_16.png',
+    image: '/web-portfolio/Sertif_16.png',
     color: '#7D2AE8',
   },
   {
@@ -159,7 +159,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'HubSpot',
     category: 'Marketing',
     year: '2023',
-    image: '/Sertif_17.png',
+    image: '/web-portfolio/Sertif_17.png',
     color: '#FF7A59',
   },
   {
@@ -168,7 +168,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'Coursera',
     category: 'Soft Skills',
     year: '2022',
-    image: '/Sertif_18.png',
+    image: '/web-portfolio/Sertif_18.png',
     color: '#0052CC',
   },
   {
@@ -177,7 +177,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'Oracle',
     category: 'Data',
     year: '2022',
-    image: '/Sertif_19.jpeg',
+    image: '/web-portfolio/Sertif_19.jpeg',
     color: '#F80000',
   },
   {
@@ -186,7 +186,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'Figma',
     category: 'Design',
     year: '2022',
-    image: '/Sertif_20.png',
+    image: '/web-portfolio/Sertif_20.png',
     color: '#F24E1E',
   },
   {
@@ -195,7 +195,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'Microsoft',
     category: 'Development',
     year: '2022',
-    image: '/Sertif_21.jpg',
+    image: '/web-portfolio/Sertif_21.jpg',
     color: '#3178C6',
   },
   {
@@ -204,7 +204,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'GitHub',
     category: 'Development',
     year: '2022',
-    image: '/Sertif_22.jpg',
+    image: '/web-portfolio/Sertif_22.jpg',
     color: '#161B22',
   },
 ]

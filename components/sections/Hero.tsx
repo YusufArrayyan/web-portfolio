@@ -182,42 +182,42 @@ export default function Hero() {
 
       {/* Floating video cards */}
       <FloatingCard
-        src="/vid1.mp4"
+        src="/web-portfolio/vid1.mp4"
         className="top-[18%] left-[4%]"
         rotate={-8}
         delay={0.6}
         label="AksesNonton"
       />
       <FloatingCard
-        src="/vid2.mov"
+        src="/web-portfolio/vid2.mov"
         className="top-[45%] left-[10%]"
         rotate={5}
         delay={0.8}
         label="DigSi"
       />
       <FloatingCard
-        src="/vid3.mov"
+        src="/web-portfolio/vid3.mov"
         className="bottom-[8%] left-[4%]"
         rotate={-12}
         delay={1.0}
         label="RyNote"
       />
       <FloatingCard
-        src="/vid4.mov"
+        src="/web-portfolio/vid4.mov"
         className="top-[12%] right-[4%]"
         rotate={9}
         delay={0.7}
         label="Elok Galo"
       />
       <FloatingCard
-        src="/vid5.mp4"
+        src="/web-portfolio/vid5.mp4"
         className="top-[48%] right-[6%]"
         rotate={-6}
         delay={0.9}
         label="BeautyScent"
       />
       <FloatingCard
-        src="/vid1.mp4"
+        src="/web-portfolio/vid1.mp4"
         className="bottom-[12%] right-[3%]"
         rotate={14}
         delay={1.1}
