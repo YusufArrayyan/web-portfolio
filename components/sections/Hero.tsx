@@ -7,10 +7,7 @@ import Image from 'next/image'
 import { easing, staggerBase, fadeInUp, wordRevealContainer } from '@/lib/animations'
 import { splitWords } from '@/lib/utils'
 
-const ThreeScene = dynamic(() => import('@/components/3d/Scene'), {
-  ssr: false,
-  loading: () => null,
-})
+
 
 /* ============================================================
    Floating Thumbnail Card — replaces empty video cards
@@ -90,7 +87,7 @@ function HeroHeadline({ text, delay = 0 }: { text: string; delay?: number }) {
       animate="visible"
     >
       {words.map((word, i) => (
-        <span key={i} className="overflow-hidden inline-block pb-4 -mb-4 pr-8 -mr-8">
+        <span key={i} className="overflow-hidden inline-block pb-6 -mb-6 pr-16 -mr-16">
           <motion.span
             className="inline-block"
             variants={{
@@ -129,10 +126,7 @@ export default function Hero() {
       ref={containerRef}
       className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-[var(--nav-height)]"
     >
-      {/* 3D Scene — background */}
-      <div className="absolute inset-0 pointer-events-none">
-        <ThreeScene className="opacity-40" />
-      </div>
+      {/* 3D Scene removed for maximum performance */}
 
       {/* Noise overlay */}
       <div

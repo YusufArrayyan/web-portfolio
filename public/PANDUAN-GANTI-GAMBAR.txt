@@ -1,0 +1,41 @@
+CARA MENGGANTI GAMBAR / THUMBNAIL (ASSETS GUIDE)
+=================================================
+
+Halo! Saya telah menyiapkan folder agar Anda mudah mengganti gambar placeholder dengan gambar/sertifikat/thumbnail asli milik Anda sendiri.
+
+1. SERTIFIKAT (Certificates)
+----------------------------
+Lokasi Folder: public/certificates/
+
+Semua sertifikat Anda saat ini diarahkan ke 1 gambar placeholder:
+`public/certificates/placeholder.png`
+
+Cara mengganti:
+- Hapus file `placeholder.png` yang lama.
+- Masukkan gambar sertifikat Anda ke dalam folder `public/certificates/` (misalnya `sertif1.jpg`, `sertif2.png`).
+- Buka file `data/certificates.ts` di VS Code.
+- Ubah baris `image: '/certificates/placeholder.png'` menjadi nama file asli Anda, misalnya `image: '/certificates/sertif1.jpg'`.
+
+2. CREATIVE SHOWCASE THUMBNAIL (Branding Reel)
+----------------------------------------------
+Lokasi Folder: public/thumbnails/
+
+Saya telah membuat 5 gambar aesthetic sebagai thumbnail untuk video di bagian Creative Showcase:
+- `cinematic.png`
+- `ambassador.png`
+- `brand.png`
+- `story.png`
+- `motion.png`
+
+Cara mengganti:
+- Jika Anda memiliki gambar yang lebih bagus, cukup beri nama gambar Anda persis seperti di atas (misal `cinematic.png`), lalu paste dan replace (timpa) file lama di dalam folder `public/thumbnails/`. Website otomatis akan memakai gambar Anda!
+- Ukuran ideal: Aspek rasio 16:9 (misal: 1920x1080 atau 1280x720).
+
+3. PROJECT THUMBNAIL (Hero Floating Cards & Modal)
+--------------------------------------------------
+Lokasi Folder: public/projects/
+
+Gambar yang mengambang di hero section dan ada di modal diambil dari folder ini (seperti `aksesnonton_1.png`, `digsi_1.png`). Anda bisa me-replace file-file tersebut atau mengganti path-nya di file `data/projects.ts` (untuk modal) dan `components/sections/Hero.tsx` (untuk gambar yang melayang).
+
+-------------------------------------------------
+Setelah Anda me-replace gambar, Anda hanya perlu melakukan `git commit` dan `git push`, dan Vercel akan otomatis meng-update website Anda secara live!
