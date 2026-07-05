@@ -148,28 +148,28 @@ export default function Hero() {
       {/* Floating project thumbnail cards — visible on xl+ */}
       <FloatingCard
         src="/projects/aksesnonton_1.png"
-        className="top-[18%] left-[4%]"
+        className="top-[12%] left-[2%] opacity-40 hover:opacity-100 transition-opacity"
         rotate={-8}
         delay={0.6}
         label="AksesNonton"
       />
       <FloatingCard
         src="/projects/digsi_1.png"
-        className="top-[50%] left-[8%]"
+        className="top-[55%] right-[2%] opacity-40 hover:opacity-100 transition-opacity"
         rotate={5}
         delay={0.8}
         label="DigSi"
       />
       <FloatingCard
         src="/projects/RyNote_1.png"
-        className="top-[12%] right-[4%]"
+        className="top-[15%] right-[6%] opacity-40 hover:opacity-100 transition-opacity"
         rotate={9}
         delay={0.7}
         label="RyNote"
       />
       <FloatingCard
         src="/projects/elok_1.png"
-        className="top-[50%] right-[6%]"
+        className="top-[65%] left-[4%] opacity-40 hover:opacity-100 transition-opacity"
         rotate={-6}
         delay={0.9}
         label="Elok Galo"
@@ -213,61 +213,63 @@ export default function Hero() {
 
         {/* Sub row */}
         <motion.div
-          className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-10"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 mt-6 lg:mt-12"
           variants={staggerBase}
           initial="hidden"
           animate="visible"
         >
-          {/* Description */}
-          <motion.p
-            className="max-w-md text-ink-secondary text-base leading-relaxed font-body"
-            variants={fadeInUp}
-          >
-            Building high-performance web applications with Next.js, TypeScript,
-            FastAPI & Go — from Bengkulu, Indonesia, for the world.
-          </motion.p>
-
-          {/* Stats */}
-          <motion.div
-            className="flex items-center gap-8 md:gap-12"
-            variants={staggerBase}
-          >
-            <StatBadge value="10+" label="Projects" />
-            <div className="w-[1px] h-8 bg-border" />
-            <StatBadge value="16+" label="Certs" />
-            <div className="w-[1px] h-8 bg-border" />
-            <StatBadge value="3+" label="Yrs Exp" />
-          </motion.div>
-
-          {/* CTA Buttons */}
-          <motion.div
-            className="flex items-center gap-4"
-            variants={fadeInUp}
-          >
-            <button
-              className="btn-primary group"
-              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-              aria-label="View my projects"
+          {/* Left: Description & Buttons */}
+          <div className="flex flex-col items-start gap-8">
+            <motion.p
+              className="max-w-md text-ink-secondary text-base lg:text-lg leading-relaxed font-body"
+              variants={fadeInUp}
             >
-              View Work
-              <svg
-                className="w-4 h-4 group-hover:translate-x-1 transition-transform"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-                aria-hidden="true"
+              Building high-performance web applications with Next.js, TypeScript,
+              FastAPI & Go — from Bengkulu, Indonesia, for the world.
+            </motion.p>
+            <motion.div
+              className="flex flex-wrap items-center gap-4"
+              variants={fadeInUp}
+            >
+              <button
+                className="btn-primary group"
+                onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+                aria-label="View my projects"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </button>
-            <button
-              className="btn-secondary group"
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-              aria-label="Go to contact section"
-            >
-              Get in touch
-            </button>
+                View Work
+                <svg
+                  className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  aria-hidden="true"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </button>
+              <button
+                className="btn-secondary group"
+                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                aria-label="Go to contact section"
+              >
+                Get in touch
+              </button>
+            </motion.div>
+          </div>
+
+          {/* Right: Stats Glass Box */}
+          <motion.div
+            className="flex lg:justify-end items-end"
+            variants={fadeInUp}
+          >
+            <div className="flex items-center gap-6 sm:gap-10 md:gap-12 bg-white/5 backdrop-blur-xl border border-white/10 p-6 md:px-10 rounded-3xl w-full lg:w-auto justify-between lg:justify-start shadow-xl">
+              <StatBadge value="10+" label="Projects" />
+              <div className="w-[1px] h-10 bg-border" />
+              <StatBadge value="16+" label="Certs" />
+              <div className="w-[1px] h-10 bg-border" />
+              <StatBadge value="3+" label="Yrs Exp" />
+            </div>
           </motion.div>
         </motion.div>
       </motion.div>
