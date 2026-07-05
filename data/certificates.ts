@@ -16,7 +16,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'Amazon Web Services (AWS)',
     category: 'Cloud & DevOps',
     year: '2024',
-    image: '/Sertif_01.jpg',
+    image: '/certificates/placeholder.png',
     color: '#FF9900',
   },
   {
@@ -25,7 +25,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'ZilLearn',
     category: 'AI & Data',
     year: '2024',
-    image: '/Sertif_02.jpg',
+    image: '/certificates/placeholder.png',
     color: '#8B5CF6',
   },
   {
@@ -34,7 +34,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'Google',
     category: 'AI & Data',
     year: '2024',
-    image: '/Sertif_03.jpg',
+    image: '/certificates/placeholder.png',
     color: '#4285F4',
   },
   {
@@ -43,7 +43,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'Google',
     category: 'AI & Data',
     year: '2024',
-    image: '/Sertif_04.jpg',
+    image: '/certificates/placeholder.png',
     color: '#EA4335',
   },
   {
@@ -52,7 +52,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'Cisco',
     category: 'Cybersecurity',
     year: '2024',
-    image: '/Sertif_05.jpg',
+    image: '/certificates/placeholder.png',
     color: '#049FD9',
   },
   {
@@ -61,7 +61,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'Dicoding Indonesia',
     category: 'Cloud & DevOps',
     year: '2024',
-    image: '/Sertif_06/Sertif_061.jpg',
+    image: '/certificates/placeholder.png',
     color: '#1DB954',
   },
   {
@@ -70,7 +70,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'Dicoding Indonesia',
     category: 'Web Development',
     year: '2024',
-    image: '/Sertif_07.jpg',
+    image: '/certificates/placeholder.png',
     color: '#F7DF1E',
   },
   {
@@ -79,7 +79,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'Dicoding Indonesia',
     category: 'Web Development',
     year: '2024',
-    image: '/Sertif_08.jpg',
+    image: '/certificates/placeholder.png',
     color: '#F7DF1E',
   },
   {
@@ -88,7 +88,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'ZilLearn',
     category: 'Cybersecurity',
     year: '2024',
-    image: '/Sertif_09.jpg',
+    image: '/certificates/placeholder.png',
     color: '#054ADA',
   },
   {
@@ -97,7 +97,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'Dicoding Indonesia',
     category: 'AI & Data',
     year: '2024',
-    image: '/Sertif_10.jpg',
+    image: '/certificates/placeholder.png',
     color: '#FF6F00',
   },
   {
@@ -106,7 +106,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'Dicoding Indonesia',
     category: 'Web Development',
     year: '2024',
-    image: '/Sertif_11.jpg',
+    image: '/certificates/placeholder.png',
     color: '#1DB954',
   },
   {
@@ -115,7 +115,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'Dicoding Indonesia / AWS',
     category: 'Cloud & DevOps',
     year: '2024',
-    image: '/Sertif_12/Sertif_121.jpg',
+    image: '/certificates/placeholder.png',
     color: '#FF9900',
   },
   {
@@ -124,7 +124,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'ZilLearn',
     category: 'AI & Data',
     year: '2024',
-    image: '/Sertif_13.jpg',
+    image: '/certificates/placeholder.png',
     color: '#10A37F',
   },
   {
@@ -133,7 +133,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'Dicoding Indonesia',
     category: 'Technical',
     year: '2024',
-    image: '/Sertif_14.jpg',
+    image: '/certificates/placeholder.png',
     color: '#1DB954',
   },
   {
@@ -142,7 +142,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'ZilLearn',
     category: 'Web Development',
     year: '2024',
-    image: '/Sertif_15/Sertif_151.jpg',
+    image: '/certificates/placeholder.png',
     color: '#E34F26',
   },
   {
@@ -151,7 +151,7 @@ export const certificatesData: Certificate[] = [
     issuer: 'ZilLearn',
     category: 'Cloud & DevOps',
     year: '2024',
-    image: '/Sertif_16.png',
+    image: '/certificates/placeholder.png',
     color: '#326CE5',
   },
 ]

@@ -2,7 +2,7 @@
 
 import { Suspense, useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Environment, MeshTransmissionMaterial, Float } from '@react-three/drei'
+import { Environment, Float } from '@react-three/drei'
 import * as THREE from 'three'
 
 /* ============================================================
@@ -24,22 +24,14 @@ function GlassSphere() {
     <Float speed={1.2} rotationIntensity={0.15} floatIntensity={0.8}>
       <mesh ref={meshRef} castShadow>
         <torusKnotGeometry args={[1.2, 0.38, 200, 32, 2, 3]} />
-        <MeshTransmissionMaterial
-          backside
-          samples={4}
-          resolution={256}
-          transmission={1}
-          roughness={0.02}
+        <meshPhysicalMaterial
+          transmission={0.9}
+          roughness={0.1}
           thickness={1.2}
           ior={1.5}
-          chromaticAberration={0.06}
-          anisotropy={0.1}
-          distortion={0.4}
-          distortionScale={0.3}
-          temporalDistortion={0.2}
           color="#b8f455"
-          attenuationColor="#80c832"
-          attenuationDistance={0.8}
+          transparent
+          opacity={1}
           envMapIntensity={1.2}
         />
       </mesh>

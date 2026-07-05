@@ -16,13 +16,13 @@ const marqueeItems = [
   { label: 'Editorial', img: '/projects/BeautyScent_1.png' },
 ]
 
-// TODO: Replace these placeholder URLs with your actual external video hosting URLs (e.g. AWS S3, Vercel Blob, YouTube)
-const showcaseVideos = [
-  { src: 'https://example-video-host.com/vid1.mp4', label: 'Cinematic', subtitle: 'Visual Storytelling' },
-  { src: 'https://example-video-host.com/vid2.mov', label: 'Ambassadorship', subtitle: 'Campus Representation' },
-  { src: 'https://example-video-host.com/vid4.mov', label: 'Brand Selling', subtitle: 'Product Campaign' },
-  { src: 'https://example-video-host.com/vid3.mov', label: 'Story Telling', subtitle: 'Narrative Vlog' },
-  { src: 'https://example-video-host.com/vid5.mp4', label: 'Motion', subtitle: 'Dynamic Editing' },
+// High-quality aesthetic thumbnails generated for the creative showcase
+const showcaseItems = [
+  { img: '/thumbnails/cinematic.png', label: 'Cinematic', subtitle: 'Visual Storytelling' },
+  { img: '/thumbnails/ambassador.png', label: 'Ambassadorship', subtitle: 'Campus Representation' },
+  { img: '/thumbnails/brand.png', label: 'Brand Selling', subtitle: 'Product Campaign' },
+  { img: '/thumbnails/story.png', label: 'Story Telling', subtitle: 'Narrative Vlog' },
+  { img: '/thumbnails/motion.png', label: 'Motion', subtitle: 'Dynamic Editing' },
 ]
 
 /* ============================================================
@@ -58,63 +58,38 @@ function MarqueeTrack({ reverse = false }: { reverse?: boolean }) {
 }
 
 /* ============================================================
-   Video Showcase Card
+   Thumbnail Card (Replaced VideoCard)
    ============================================================ */
 
-function VideoCard({ src, label, subtitle }: { src: string; label: string; subtitle: string }) {
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const [playing, setPlaying] = useState(false)
-
-  const toggle = () => {
-    if (!videoRef.current) return
-    if (playing) {
-      videoRef.current.pause()
-    } else {
-      videoRef.current.play()
-    }
-    setPlaying(!playing)
-  }
-
+function ThumbnailCard({ img, label, subtitle }: { img: string; label: string; subtitle: string }) {
   return (
     <motion.div
       className="relative aspect-video rounded-3xl overflow-hidden border border-border group cursor-pointer"
-      whileHover={{ scale: 1.01 }}
-      transition={{ duration: 0.3 }}
-      onClick={toggle}
-      data-cursor="video"
+      whileHover={{ scale: 1.02 }}
+      transition={{ duration: 0.4, ease: easing.outExpo }}
+      data-cursor="view"
     >
-      <video
-        ref={videoRef}
-        src={src}
-        muted
-        loop
-        playsInline
-        preload="none"
-        className="w-full h-full object-cover opacity-60 group-hover:opacity-90 transition-opacity duration-500"
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={img}
+        alt={label}
+        className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/20 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-bg/90 via-bg/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
 
-      {/* Play button */}
+      {/* View indicator */}
       <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-ink/90 flex items-center justify-center"
-        animate={{ opacity: playing ? 0 : 1, scale: playing ? 0.8 : 1 }}
-        transition={{ duration: 0.3 }}
+        className="absolute top-4 right-4 w-10 h-10 rounded-full bg-bg/50 backdrop-blur-md border border-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-500"
       >
-        {!playing ? (
-          <svg className="w-6 h-6 text-bg translate-x-0.5" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M8 5v14l11-7z" />
-          </svg>
-        ) : (
-          <svg className="w-5 h-5 text-bg" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-          </svg>
-        )}
+        <svg className="w-4 h-4 text-ink" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
       </motion.div>
 
       {/* Label */}
       <div className="absolute bottom-6 left-6">
-        <h4 className="font-display text-2xl font-800 text-ink">{label}</h4>
-        <p className="text-xs font-mono uppercase tracking-widest text-ink-secondary mt-1">{subtitle}</p>
+        <h4 className="font-display text-2xl md:text-3xl font-800 text-ink tracking-tight mb-1">{label}</h4>
+        <p className="text-xs font-mono uppercase tracking-widest text-accent">{subtitle}</p>
       </div>
     </motion.div>
   )
@@ -173,14 +148,14 @@ export default function BrandingReel() {
       {/* Video showcase grid */}
       <div className="container-main">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {showcaseVideos.map((vid, i) => (
+          {showcaseItems.map((item, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
               transition={{ duration: 0.7, delay: i * 0.1, ease: easing.outExpo }}
             >
-              <VideoCard {...vid} />
+              <ThumbnailCard {...item} />
             </motion.div>
           ))}
         </div>

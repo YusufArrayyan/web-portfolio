@@ -52,7 +52,7 @@ export default function AnimatedText({
         aria-label={text}
       >
         {words.map((word, i) => (
-          <span key={i} className="overflow-hidden inline-block pb-2 -mb-2 pr-2 -mr-2">
+          <span key={i} className="overflow-hidden inline-block pb-4 -mb-4 pr-6 -mr-6">
             <motion.span
               className="inline-block"
               variants={{
