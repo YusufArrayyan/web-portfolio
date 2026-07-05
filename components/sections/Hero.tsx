@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState, useEffect, useMemo } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, useMotionValue } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { easing, staggerBase, fadeInUp, wordRevealContainer } from '@/lib/animations'
@@ -120,6 +120,27 @@ export default function Hero() {
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '25%'])
   const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0])
 
+  // Mouse tracking for interactive elements
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX.set(e.clientX - window.innerWidth / 2)
+      mouseY.set(e.clientY - window.innerHeight / 2)
+    }
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [mouseX, mouseY])
+
+  // Subtle magnetic movement for text
+  const textX = useTransform(mouseX, [-1000, 1000], [-15, 15])
+  const textY = useTransform(mouseY, [-1000, 1000], [-15, 15])
+
+  // Larger movement for aurora blobs
+  const blobX = useTransform(mouseX, [-1000, 1000], [-80, 80])
+  const blobY = useTransform(mouseY, [-1000, 1000], [-80, 80])
+
   return (
     <section
       id="hero"
@@ -128,9 +149,9 @@ export default function Hero() {
     >
       {/* High-performance CSS Aurora Background (Replaces 3D Scene) */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40 dark:opacity-30">
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-accent/40 blur-[120px] animate-blob" />
-        <div className="absolute top-[20%] right-[-10%] w-[40%] h-[40%] rounded-full bg-blue-500/20 blur-[120px] animate-blob animation-delay-2000" />
-        <div className="absolute bottom-[-20%] left-[20%] w-[40%] h-[40%] rounded-full bg-purple-500/20 blur-[120px] animate-blob animation-delay-4000" />
+        <motion.div style={{ x: blobX, y: blobY }} className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-accent/40 blur-[120px] animate-blob" />
+        <motion.div style={{ x: useTransform(blobX, v => -v), y: useTransform(blobY, v => -v) }} className="absolute top-[20%] right-[-10%] w-[40%] h-[40%] rounded-full bg-blue-500/20 blur-[120px] animate-blob animation-delay-2000" />
+        <motion.div style={{ x: blobX, y: useTransform(blobY, v => -v) }} className="absolute bottom-[-20%] left-[20%] w-[40%] h-[40%] rounded-full bg-purple-500/20 blur-[120px] animate-blob animation-delay-4000" />
       </div>
 
       {/* Noise overlay */}
@@ -194,22 +215,22 @@ export default function Hero() {
         </motion.div>
 
         {/* Hero headline */}
-        <div className="overflow-visible mb-2">
+        <motion.div className="overflow-visible mb-2" style={{ x: textX, y: textY }}>
           <h1
             className="font-display text-fluid-hero font-800 leading-none tracking-tighter text-ink uppercase px-2"
             style={{ letterSpacing: '-0.02em' }}
           >
             <HeroHeadline text="Full Stack" delay={0.3} />
           </h1>
-        </div>
-        <div className="overflow-visible mb-12">
+        </motion.div>
+        <motion.div className="overflow-visible mb-12" style={{ x: textX, y: textY }}>
           <h1
             className="font-display text-fluid-hero font-800 leading-none tracking-tighter text-accent uppercase px-2"
             style={{ letterSpacing: '-0.02em' }}
           >
             <HeroHeadline text="Developer" delay={0.42} />
           </h1>
-        </div>
+        </motion.div>
 
         {/* Sub row */}
         <motion.div
@@ -229,19 +250,19 @@ export default function Hero() {
 
           {/* Stats */}
           <motion.div
-            className="flex items-center gap-8 md:gap-12"
+            className="flex flex-wrap items-center gap-4 sm:gap-6 md:gap-12"
             variants={staggerBase}
           >
             <StatBadge value="10+" label="Projects" />
-            <div className="w-[1px] h-8 bg-border" />
+            <div className="w-[1px] h-8 bg-border hidden sm:block" />
             <StatBadge value="16+" label="Certs" />
-            <div className="w-[1px] h-8 bg-border" />
+            <div className="w-[1px] h-8 bg-border hidden sm:block" />
             <StatBadge value="3+" label="Yrs Exp" />
           </motion.div>
 
           {/* CTA Buttons */}
           <motion.div
-            className="flex items-center gap-4"
+            className="flex flex-wrap items-center gap-4 w-full sm:w-auto"
             variants={fadeInUp}
           >
             <button
