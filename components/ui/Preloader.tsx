@@ -55,9 +55,12 @@ export default function Preloader({ onComplete }: PreloaderProps) {
           {/* Counter — massive background number */}
           <motion.span
             className="preloader-counter select-none"
+            initial={{ x: '-50%', y: '-50%', scale: 1 }}
             animate={{
               opacity: phase === 'reveal' ? 0 : 0.07,
               scale: phase === 'reveal' ? 1.05 : 1,
+              x: '-50%',
+              y: '-50%',
             }}
             transition={{ duration: 0.4 }}
           >
