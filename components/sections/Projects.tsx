@@ -128,7 +128,6 @@ function ProjectModal({
   onClose: () => void
 }) {
   const [activeImg, setActiveImg] = useState(0)
-  const videoRef = useRef<HTMLVideoElement>(null)
 
   return (
     <motion.div
@@ -150,14 +149,11 @@ function ProjectModal({
         variants={drawerVariants}
       >
         {/* Left — Media */}
-        <div className="relative w-full md:w-1/2 h-64 md:h-auto">
-          <video
-            ref={videoRef}
-            src={project.video}
-            muted
-            loop
-            autoPlay
-            playsInline
+        <div className="relative w-full md:w-1/2 h-64 md:h-auto bg-elevated border-r border-border">
+          <Image
+            src={project.images[activeImg] || project.image}
+            alt={project.title}
+            fill
             className="absolute inset-0 w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-transparent to-surface/50 hidden md:block" />

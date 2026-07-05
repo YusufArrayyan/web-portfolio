@@ -1,10 +1,10 @@
 'use client'
 
-import { useRef, useState, useEffect } from 'react'
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion'
+import { useRef, useState, useEffect, useMemo } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
-import { easing, staggerBase, fadeInUp, wordRevealContainer, wordRevealChild } from '@/lib/animations'
+import { easing, staggerBase, fadeInUp, wordRevealContainer } from '@/lib/animations'
 import { splitWords } from '@/lib/utils'
 
 const ThreeScene = dynamic(() => import('@/components/3d/Scene'), {
@@ -13,7 +13,7 @@ const ThreeScene = dynamic(() => import('@/components/3d/Scene'), {
 })
 
 /* ============================================================
-   Floating Video Card
+   Floating Thumbnail Card — replaces empty video cards
    ============================================================ */
 
 interface FloatingCardProps {
@@ -25,19 +25,6 @@ interface FloatingCardProps {
 }
 
 function FloatingCard({ src, className, rotate, delay, label }: FloatingCardProps) {
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const [playing, setPlaying] = useState(false)
-
-  const handleMouseEnter = () => {
-    videoRef.current?.play()
-    setPlaying(true)
-  }
-
-  const handleMouseLeave = () => {
-    videoRef.current?.pause()
-    setPlaying(false)
-  }
-
   return (
     <motion.div
       className={`absolute ${className} hidden xl:block`}
@@ -48,32 +35,24 @@ function FloatingCard({ src, className, rotate, delay, label }: FloatingCardProp
     >
       <motion.div
         className="relative w-44 h-56 md:w-52 md:h-64 rounded-2xl overflow-hidden border border-white/10 shadow-2xl"
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
         whileHover={{ scale: 1.06 }}
         transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-        data-cursor="video"
       >
-        <video
-          ref={videoRef}
+        <Image
           src={src}
-          muted
-          loop
-          playsInline
-          preload="none"
-          className="absolute inset-0 w-full h-full object-cover opacity-60 hover:opacity-90 transition-opacity duration-700"
+          alt={label}
+          fill
+          className="object-cover opacity-60 hover:opacity-90 transition-opacity duration-700"
+          sizes="208px"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
         <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
           <span className="text-[9px] font-mono uppercase tracking-widest text-white/60">
             {label}
           </span>
-          <motion.div
-            className="w-6 h-6 rounded-full bg-accent/20 backdrop-blur-sm border border-accent/30 flex items-center justify-center"
-            animate={{ opacity: playing ? 1 : 0.6 }}
-          >
+          <div className="w-6 h-6 rounded-full bg-accent/20 backdrop-blur-sm border border-accent/30 flex items-center justify-center">
             <div className="w-2 h-2 bg-accent rounded-full" />
-          </motion.div>
+          </div>
         </div>
       </motion.div>
     </motion.div>
@@ -90,7 +69,7 @@ function StatBadge({ value, label }: { value: string; label: string }) {
       className="flex flex-col items-center gap-1"
       variants={fadeInUp}
     >
-      <span className="font-display text-4xl font-800 text-accent">{value}</span>
+      <span className="font-display text-3xl md:text-4xl font-800 text-accent">{value}</span>
       <span className="text-[10px] font-mono uppercase tracking-widest text-ink-tertiary">{label}</span>
     </motion.div>
   )
@@ -101,7 +80,7 @@ function StatBadge({ value, label }: { value: string; label: string }) {
    ============================================================ */
 
 function HeroHeadline({ text, delay = 0 }: { text: string; delay?: number }) {
-  const words = splitWords(text)
+  const words = useMemo(() => splitWords(text), [text])
 
   return (
     <motion.div
@@ -109,10 +88,9 @@ function HeroHeadline({ text, delay = 0 }: { text: string; delay?: number }) {
       variants={wordRevealContainer}
       initial="hidden"
       animate="visible"
-      style={{ transitionDelay: `${delay}s` } as React.CSSProperties}
     >
       {words.map((word, i) => (
-        <span key={i} className="overflow-hidden inline-block">
+        <span key={i} className="overflow-hidden inline-block pb-2 -mb-2 pr-2 -mr-2">
           <motion.span
             className="inline-block"
             variants={{
@@ -145,18 +123,6 @@ export default function Hero() {
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '25%'])
   const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0])
 
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 20
-      const y = (e.clientY / window.innerHeight - 0.5) * 20
-      setMousePos({ x, y })
-    }
-    window.addEventListener('mousemove', handleMouseMove, { passive: true })
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
-
   return (
     <section
       id="hero"
@@ -180,48 +146,34 @@ export default function Hero() {
       {/* Subtle radial glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full bg-accent/[0.04] blur-[120px] pointer-events-none" />
 
-      {/* Floating video cards */}
+      {/* Floating project thumbnail cards — visible on xl+ */}
       <FloatingCard
-        src="/web-portfolio/vid1.mp4"
+        src="/projects/aksesnonton_1.png"
         className="top-[18%] left-[4%]"
         rotate={-8}
         delay={0.6}
         label="AksesNonton"
       />
       <FloatingCard
-        src="/web-portfolio/vid2.mov"
-        className="top-[45%] left-[10%]"
+        src="/projects/digsi_1.png"
+        className="top-[50%] left-[8%]"
         rotate={5}
         delay={0.8}
         label="DigSi"
       />
       <FloatingCard
-        src="/web-portfolio/vid3.mov"
-        className="bottom-[8%] left-[4%]"
-        rotate={-12}
-        delay={1.0}
-        label="RyNote"
-      />
-      <FloatingCard
-        src="/web-portfolio/vid4.mov"
+        src="/projects/RyNote_1.png"
         className="top-[12%] right-[4%]"
         rotate={9}
         delay={0.7}
-        label="Elok Galo"
+        label="RyNote"
       />
       <FloatingCard
-        src="/web-portfolio/vid5.mp4"
-        className="top-[48%] right-[6%]"
+        src="/projects/elok_1.png"
+        className="top-[50%] right-[6%]"
         rotate={-6}
         delay={0.9}
-        label="BeautyScent"
-      />
-      <FloatingCard
-        src="/web-portfolio/vid1.mp4"
-        className="bottom-[12%] right-[3%]"
-        rotate={14}
-        delay={1.1}
-        label="Anthfis"
+        label="Elok Galo"
       />
 
       {/* Main content */}
@@ -243,58 +195,49 @@ export default function Hero() {
         </motion.div>
 
         {/* Hero headline */}
-        <div className="overflow-hidden mb-2">
+        <div className="overflow-visible mb-2">
           <h1
-            className="font-display text-fluid-hero font-800 leading-none tracking-tighter text-ink uppercase"
-            style={{ letterSpacing: '-0.05em' }}
+            className="font-display text-fluid-hero font-800 leading-none tracking-tighter text-ink uppercase px-2"
+            style={{ letterSpacing: '-0.02em' }}
           >
-            <HeroHeadline text="Creative" delay={0.3} />
+            <HeroHeadline text="Full Stack" delay={0.3} />
           </h1>
         </div>
-        <div className="overflow-hidden mb-2">
+        <div className="overflow-visible mb-12">
           <h1
-            className="font-display text-fluid-hero font-800 leading-none tracking-tighter text-ink-tertiary uppercase italic"
-            style={{ letterSpacing: '-0.05em' }}
+            className="font-display text-fluid-hero font-800 leading-none tracking-tighter text-accent uppercase px-2"
+            style={{ letterSpacing: '-0.02em' }}
           >
             <HeroHeadline text="Developer" delay={0.42} />
-          </h1>
-        </div>
-        <div className="overflow-hidden mb-12">
-          <h1
-            className="font-display text-fluid-hero font-800 leading-none tracking-tighter text-ink uppercase"
-            style={{ letterSpacing: '-0.05em' }}
-          >
-            <HeroHeadline text="& Designer" delay={0.54} />
           </h1>
         </div>
 
         {/* Sub row */}
         <motion.div
-          className="flex flex-col md:flex-row items-start md:items-end justify-between gap-10"
+          className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-10"
           variants={staggerBase}
           initial="hidden"
           animate="visible"
-          style={{ transitionDelay: '0.8s' } as React.CSSProperties}
         >
           {/* Description */}
           <motion.p
-            className="max-w-sm text-ink-secondary text-base leading-relaxed font-body"
+            className="max-w-md text-ink-secondary text-base leading-relaxed font-body"
             variants={fadeInUp}
           >
-            Crafting immersive digital experiences where cinematic aesthetics
-            meet high-performance engineering — based in Indonesia, working globally.
+            Building high-performance web applications with Next.js, TypeScript,
+            FastAPI & Go — from Bengkulu, Indonesia, for the world.
           </motion.p>
 
           {/* Stats */}
           <motion.div
-            className="flex items-center gap-12"
+            className="flex items-center gap-8 md:gap-12"
             variants={staggerBase}
           >
-            <StatBadge value="5+" label="Projects" />
+            <StatBadge value="10+" label="Projects" />
             <div className="w-[1px] h-8 bg-border" />
-            <StatBadge value="22+" label="Certs" />
+            <StatBadge value="16+" label="Certs" />
             <div className="w-[1px] h-8 bg-border" />
-            <StatBadge value="4+" label="Yrs Exp" />
+            <StatBadge value="3+" label="Yrs Exp" />
           </motion.div>
 
           {/* CTA Buttons */}
@@ -305,6 +248,7 @@ export default function Hero() {
             <button
               className="btn-primary group"
               onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+              aria-label="View my projects"
             >
               View Work
               <svg
@@ -313,6 +257,7 @@ export default function Hero() {
                 viewBox="0 0 24 24"
                 stroke="currentColor"
                 strokeWidth={2}
+                aria-hidden="true"
               >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
@@ -320,6 +265,7 @@ export default function Hero() {
             <button
               className="btn-secondary group"
               onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              aria-label="Go to contact section"
             >
               Get in touch
             </button>
@@ -329,7 +275,7 @@ export default function Hero() {
 
       {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 hidden md:flex"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 0.8 }}

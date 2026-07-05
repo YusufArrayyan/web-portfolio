@@ -26,8 +26,8 @@ function GlassSphere() {
         <torusKnotGeometry args={[1.2, 0.38, 200, 32, 2, 3]} />
         <MeshTransmissionMaterial
           backside
-          samples={8}
-          resolution={512}
+          samples={4}
+          resolution={256}
           transmission={1}
           roughness={0.02}
           thickness={1.2}
@@ -118,7 +118,7 @@ export default function ThreeScene({ className = '' }: ThreeSceneProps) {
             alpha: true,
             powerPreference: 'high-performance',
           }}
-          dpr={[1, 1.5]}
+          dpr={[1, 1.2]}
         >
           <SceneContent />
         </Canvas>

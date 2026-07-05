@@ -5,19 +5,20 @@ import { motion, AnimatePresence, useInView } from 'framer-motion'
 import Image from 'next/image'
 import { SectionLabel } from '@/components/shared/AnimatedText'
 import AnimatedText from '@/components/shared/AnimatedText'
-import { staggerBase, fadeInUp, fadeInLeft, fadeInRight, scaleIn, easing } from '@/lib/animations'
+import { staggerBase, fadeInUp, fadeInLeft, fadeInRight, easing } from '@/lib/animations'
 
 const skills = [
-  { category: 'Frontend', items: ['React', 'Next.js', 'TypeScript', 'Framer Motion', 'Three.js'] },
-  { category: 'Backend', items: ['Node.js', 'Express', 'PostgreSQL', 'Go', 'REST APIs'] },
-  { category: 'Design', items: ['Figma', 'UI/UX', 'Motion Design', 'Brand Identity', 'Prototyping'] },
-  { category: 'Tools', items: ['Vite', 'Docker', 'Git', 'Vercel', 'Firebase'] },
+  { category: 'Frontend', items: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Three.js'] },
+  { category: 'Backend', items: ['FastAPI', 'Python', 'Go', 'Node.js', 'Express', 'REST APIs'] },
+  { category: 'Database', items: ['PostgreSQL', 'MySQL', 'MongoDB', 'Firebase'] },
+  { category: 'Tools & DevOps', items: ['Git', 'Docker', 'Vercel', 'AWS', 'Vite', 'Figma'] },
+  { category: 'Creative', items: ['Adobe Premiere Pro', 'After Effects', 'Cinematography', 'Video Editing'] },
 ]
 
 const stats = [
-  { value: '4+', label: 'Years Experience' },
-  { value: '22+', label: 'Certifications' },
-  { value: '5+', label: 'Projects Shipped' },
+  { value: '3+', label: 'Years Experience' },
+  { value: '16+', label: 'Certifications' },
+  { value: '10+', label: 'Projects Shipped' },
   { value: '100%', label: 'Passion' },
 ]
 
@@ -30,7 +31,7 @@ export default function About() {
     <section
       id="about"
       ref={sectionRef}
-      className="section-padding bg-[#0a0a0a] relative overflow-hidden"
+      className="section-padding bg-bg relative overflow-hidden"
     >
       {/* Top border */}
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-border" />
@@ -53,8 +54,8 @@ export default function About() {
             {/* Profile image */}
             <div className="relative aspect-[4/5] rounded-3xl overflow-hidden">
               <Image
-                src="/web-portfolio/profile.jpg"
-                alt="Rayyan — Creative Developer"
+                src="/profile.jpg"
+                alt="Muhammad Yusuf Arrayyan — Full Stack Developer"
                 fill
                 className="object-cover grayscale hover:grayscale-0 transition-all duration-1000"
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -98,7 +99,7 @@ export default function About() {
             >
               <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="text-xs font-mono text-ink-secondary uppercase tracking-widest">
-                Indonesia
+                Bengkulu, Indonesia
               </span>
             </motion.div>
           </motion.div>
@@ -118,6 +119,7 @@ export default function About() {
                   className={`relative px-6 py-2.5 rounded-full text-xs font-mono uppercase tracking-widest transition-colors duration-200 ${
                     mode === m ? 'text-bg' : 'text-ink-secondary hover:text-ink'
                   }`}
+                  aria-pressed={mode === m}
                 >
                   {mode === m && (
                     <motion.div
@@ -142,34 +144,34 @@ export default function About() {
                   className="space-y-8"
                 >
                   <AnimatedText
-                    text="The art of the unknown."
+                    text="Building systems that scale."
                     className="font-display text-fluid-3xl font-800 tracking-tighter text-ink"
                     tag="h2"
                   />
 
                   <div className="space-y-5">
                     <p className="text-ink-secondary text-base leading-relaxed font-body">
-                      I am Rayyan — a creative developer and designer driven by the
-                      intersection of{' '}
-                      <span className="text-ink font-500">creative chaos</span> and{' '}
-                      <span className="text-ink font-500">mathematical precision</span>. I
-                      don't just build interfaces — I orchestrate digital experiences that
-                      demand attention.
+                      I'm <span className="text-ink font-500">Muhammad Yusuf Arrayyan</span> — a Full Stack Developer
+                      studying Informatics Engineering at{' '}
+                      <span className="text-ink font-500">Universitas Bengkulu</span>. I build
+                      end-to-end web applications using modern tools like Next.js, FastAPI, TypeScript,
+                      and Go.
                     </p>
                     <p className="text-ink-secondary text-base leading-relaxed font-body">
-                      Based in Indonesia, working globally. Every project starts with a
-                      deep understanding of what a product needs to feel, not just look —
-                      and ends when the last animation feels exactly right.
+                      Beyond code, I'm passionate about{' '}
+                      <span className="text-ink font-500">cinematography and content creation</span> —
+                      blending technical engineering with creative storytelling. Currently working on
+                      award-winning EdTech platforms and SaaS products.
                     </p>
                   </div>
 
                   {/* Info grid */}
                   <div className="grid grid-cols-2 gap-4">
                     {[
-                      { label: 'Location', value: 'Indonesia / Remote' },
-                      { label: 'Focus', value: 'Cinematic UI & Engineering' },
-                      { label: 'Availability', value: 'Open to projects' },
-                      { label: 'Languages', value: 'ID, EN' },
+                      { label: 'Location', value: 'Bengkulu, Indonesia' },
+                      { label: 'Focus', value: 'Full Stack Engineering' },
+                      { label: 'Education', value: 'Informatics Engineering, UNIB' },
+                      { label: 'Languages', value: 'Indonesian, English' },
                     ].map((item) => (
                       <div key={item.label} className="border border-border rounded-2xl p-4">
                         <p className="text-[10px] font-mono uppercase tracking-widest text-ink-tertiary mb-2">
@@ -182,12 +184,12 @@ export default function About() {
 
                   {/* CV download */}
                   <a
-                    href="/cv.pdf"
+                    href="/MuhammadYusufArrayyan_UniversitasBengkulu__CV.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-secondary inline-flex w-fit"
                   >
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
                     </svg>
                     Download CV
@@ -203,15 +205,16 @@ export default function About() {
                   className="space-y-8"
                 >
                   <AnimatedText
-                    text="Full-stack mastery, cinematic execution."
+                    text="Full-stack engineering, from backend to pixel."
                     className="font-display text-fluid-3xl font-800 tracking-tighter text-ink"
                     tag="h2"
                   />
 
                   <p className="text-ink-secondary text-base leading-relaxed font-body">
-                    My expertise spans the entire product stack — from database architecture
-                    to pixel-perfect animations. If it moves, I make it move with{' '}
-                    <span className="text-ink font-500">purpose</span>.
+                    My expertise spans from database architecture and API design to responsive
+                    frontends and motion-rich interfaces. I specialize in building{' '}
+                    <span className="text-ink font-500">production-grade systems</span> that solve
+                    real problems.
                   </p>
 
                   {/* Skill groups */}

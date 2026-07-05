@@ -31,14 +31,14 @@ export default function Footer() {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <div className="relative w-10 h-10 overflow-hidden rounded-xl">
-                <Image src="/web-portfolio/logo.png" alt="Rayyan" fill className="object-contain" />
+                <Image src="/logo.png" alt="Muhammad Yusuf Arrayyan" fill className="object-contain" />
               </div>
               <span className="font-display text-lg font-800 uppercase tracking-widest text-ink">
                 Rayyan
               </span>
             </div>
             <p className="text-sm text-ink-secondary max-w-xs leading-relaxed font-body">
-              Creative developer & designer crafting cinematic digital experiences from Indonesia.
+              Full Stack Developer building high-performance web applications from Indonesia.
             </p>
           </div>
 
@@ -95,7 +95,7 @@ export default function Footer() {
 
           {/* Copyright */}
           <p className="text-[10px] font-mono uppercase tracking-widest text-ink-tertiary">
-            © {year} Rayyan. All rights reserved.
+            © {year} Muhammad Yusuf Arrayyan. All rights reserved.
           </p>
 
           {/* Status */}

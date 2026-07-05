@@ -1,1 +1,1 @@
-export const BASE_PATH = '/web-portfolio'
+export const BASE_PATH = ''

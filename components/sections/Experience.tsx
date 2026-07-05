@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
-import { experienceData, type ExperienceItem } from '@/data/experience'
+import { experienceData, type ExperienceItem, educationData, type Education } from '@/data/experience'
 import { SectionLabel } from '@/components/shared/AnimatedText'
 import { easing } from '@/lib/animations'
 
@@ -130,6 +130,62 @@ function ExpItem({ item, index }: { item: ExperienceItem; index: number }) {
 }
 
 /* ============================================================
+   Education Item
+   ============================================================ */
+
+function EducationItem({ item, index }: { item: Education; index: number }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const isInView = useInView(ref, { once: true, margin: '-5% 0px' })
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, x: 30 }}
+      animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
+      transition={{ duration: 0.6, delay: index * 0.06, ease: easing.outExpo }}
+      className="relative"
+    >
+      <div className="absolute left-0 top-6 w-2 h-2 rounded-full bg-border">
+        <motion.div
+          className="absolute inset-0 rounded-full bg-accent"
+          animate={{ scale: isInView ? [0, 1.4, 1] : 0 }}
+          transition={{ duration: 0.5, delay: index * 0.06 + 0.3 }}
+        />
+      </div>
+
+      <div className="pl-8 pb-12 border-l border-border ml-1 last:pb-0 last:border-transparent">
+        <div className="w-full text-left">
+          <div className="flex flex-col gap-1">
+            <span className="font-mono text-xs text-ink-tertiary uppercase tracking-widest">
+              {item.date}
+            </span>
+            <h3 className="font-display text-xl md:text-2xl font-800 tracking-tight text-ink mt-1">
+              {item.degree}
+            </h3>
+            <div className="flex flex-col gap-1 mt-2">
+              <span className="text-sm font-body font-500 text-ink">{item.institution}</span>
+              <span className="text-sm font-body text-ink-secondary">{item.field}</span>
+            </div>
+            {item.description && (
+              <p className="text-ink-secondary text-sm leading-relaxed font-body mt-4">
+                {item.description}
+              </p>
+            )}
+            <div className="flex items-center gap-2 text-xs font-mono text-ink-tertiary uppercase tracking-widest mt-4">
+              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              {item.location}
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  )
+}
+
+/* ============================================================
    Experience Section
    ============================================================ */
 
@@ -192,6 +248,15 @@ export default function Experience() {
               </p>
               {orgItems.map((item, i) => (
                 <ExpItem key={item.id} item={item} index={i} />
+              ))}
+            </div>
+
+            <div className="mt-12">
+              <p className="text-[10px] font-mono uppercase tracking-widest text-accent mb-8">
+                Education
+              </p>
+              {educationData.map((item, i) => (
+                <EducationItem key={item.id} item={item} index={i} />
               ))}
             </div>
           </div>

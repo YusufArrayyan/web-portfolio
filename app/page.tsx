@@ -9,11 +9,13 @@ import SmoothScroll from '@/components/ui/SmoothScroll'
 import Navbar from '@/components/layout/Navbar'
 import Hero from '@/components/sections/Hero'
 import About from '@/components/sections/About'
-import Projects from '@/components/sections/Projects'
-import BrandingReel from '@/components/sections/BrandingReel'
-import Certificates from '@/components/sections/Certificates'
-import Experience from '@/components/sections/Experience'
-import Services from '@/components/sections/Services'
+import dynamic from 'next/dynamic'
+
+const Projects = dynamic(() => import('@/components/sections/Projects'))
+const BrandingReel = dynamic(() => import('@/components/sections/BrandingReel'))
+const Certificates = dynamic(() => import('@/components/sections/Certificates'))
+const Experience = dynamic(() => import('@/components/sections/Experience'))
+const Services = dynamic(() => import('@/components/sections/Services'))
 import Contact from '@/components/sections/Contact'
 import Footer from '@/components/sections/Footer'
 

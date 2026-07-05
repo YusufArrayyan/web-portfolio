@@ -1,10 +1,9 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  output: 'export',
-  assetPrefix: '/web-portfolio/',
   images: {
-    unoptimized: true,
+    formats: ['image/avif', 'image/webp'],
+    deviceSizes: [320, 375, 414, 640, 750, 828, 1080, 1200, 1440, 1920],
   },
   experimental: {
     optimizePackageImports: ['framer-motion', 'lucide-react', 'three'],
