@@ -198,7 +198,7 @@ code, pre {
   }
 
   .text-fluid-hero {
-    font-size: clamp(5rem, 14vw, 16rem);
+    font-size: clamp(4.5rem, 11vw, 11rem);
   }
 
   /* Glass surface */

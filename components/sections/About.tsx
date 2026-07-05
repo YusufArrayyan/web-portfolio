@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef } from 'react'
-import { motion, AnimatePresence, useInView } from 'framer-motion'
+import { motion, AnimatePresence, useInView, useMotionValue, useMotionTemplate } from 'framer-motion'
 import Image from 'next/image'
 import { SectionLabel } from '@/components/shared/AnimatedText'
 import AnimatedText from '@/components/shared/AnimatedText'
@@ -26,6 +26,14 @@ export default function About() {
   const [mode, setMode] = useState<'identity' | 'mastery'>('identity')
   const sectionRef = useRef<HTMLElement>(null)
   const isInView = useInView(sectionRef, { once: true, margin: '-15% 0px' })
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+
+  function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
+    const { left, top } = currentTarget.getBoundingClientRect()
+    mouseX.set(clientX - left)
+    mouseY.set(clientY - top)
+  }
 
   return (
     <section
@@ -51,17 +59,51 @@ export default function About() {
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
           >
-            {/* Profile image */}
-            <div className="relative aspect-[4/5] rounded-3xl overflow-hidden">
+            {/* Profile image with interactive mask */}
+            <div 
+              className="relative aspect-[4/5] rounded-3xl overflow-hidden group cursor-crosshair"
+              onMouseMove={handleMouseMove}
+              onMouseLeave={() => {
+                mouseX.set(-1000)
+                mouseY.set(-1000)
+              }}
+            >
+              {/* Base Grayscale Image */}
               <Image
                 src="/profile.jpg"
-                alt="Muhammad Yusuf Arrayyan — Full Stack Developer"
+                alt="Muhammad Yusuf Arrayyan"
                 fill
-                className="object-cover grayscale hover:grayscale-0 transition-all duration-1000"
+                className="object-cover grayscale opacity-80"
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
+              
+              {/* Interactive Colored Mask (Desktop only) */}
+              <motion.div
+                className="absolute inset-0 z-10 hidden lg:block pointer-events-none"
+                style={{
+                  clipPath: useMotionTemplate`circle(100px at ${mouseX}px ${mouseY}px)`,
+                }}
+              >
+                <Image
+                  src="/profile.jpg"
+                  alt="Muhammad Yusuf Arrayyan"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </motion.div>
+
+              {/* Mobile Hover Fallback */}
+              <Image
+                src="/profile.jpg"
+                alt="Muhammad Yusuf Arrayyan"
+                fill
+                className="object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-700 lg:hidden"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+
               {/* Overlay gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/20 to-transparent z-20 pointer-events-none" />
 
               {/* Accent overlay */}
               <motion.div

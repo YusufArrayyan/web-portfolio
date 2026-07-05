@@ -168,22 +168,40 @@ export default function BrandingReel() {
           transition={{ delay: 0.5 }}
         >
           <motion.div
-            className="flex items-center gap-10 whitespace-nowrap"
-            animate={{ x: [0, -400] }}
-            transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+            className="flex items-center w-max"
+            animate={{ x: ['0%', '-50%'] }}
+            transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
           >
-            {Array(6).fill(null).map((_, i) => (
-              <span key={i} className="flex items-center gap-10">
-                <span className="font-display text-8xl font-800 tracking-tighter text-ink-tertiary/20 uppercase">
-                  Creative
+            {/* First Half */}
+            <div className="flex items-center gap-10 pr-10">
+              {Array(4).fill(null).map((_, i) => (
+                <span key={i} className="flex items-center gap-10">
+                  <span className="font-display text-8xl font-800 tracking-tighter text-ink-tertiary/20 uppercase">
+                    Creative
+                  </span>
+                  <span className="w-4 h-4 rounded-full bg-accent flex-shrink-0" />
+                  <span className="font-display text-8xl font-800 tracking-tighter text-ink-tertiary/20 uppercase italic">
+                    Developer
+                  </span>
+                  <span className="w-4 h-4 rounded-full bg-border flex-shrink-0" />
                 </span>
-                <span className="w-4 h-4 rounded-full bg-accent flex-shrink-0" />
-                <span className="font-display text-8xl font-800 tracking-tighter text-ink-tertiary/20 uppercase italic">
-                  Developer
+              ))}
+            </div>
+            {/* Second Half (Exact Duplicate) */}
+            <div className="flex items-center gap-10 pr-10">
+              {Array(4).fill(null).map((_, i) => (
+                <span key={i} className="flex items-center gap-10">
+                  <span className="font-display text-8xl font-800 tracking-tighter text-ink-tertiary/20 uppercase">
+                    Creative
+                  </span>
+                  <span className="w-4 h-4 rounded-full bg-accent flex-shrink-0" />
+                  <span className="font-display text-8xl font-800 tracking-tighter text-ink-tertiary/20 uppercase italic">
+                    Developer
+                  </span>
+                  <span className="w-4 h-4 rounded-full bg-border flex-shrink-0" />
                 </span>
-                <span className="w-4 h-4 rounded-full bg-border flex-shrink-0" />
-              </span>
-            ))}
+              ))}
+            </div>
           </motion.div>
         </motion.div>
       </div>
