@@ -43,7 +43,7 @@ export default function About() {
         </SectionLabel>
 
         {/* Main grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 xl:gap-32 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 xl:gap-32 items-start">
           {/* Left — Image */}
           <motion.div
             className="relative"

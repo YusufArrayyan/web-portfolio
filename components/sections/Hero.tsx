@@ -126,7 +126,12 @@ export default function Hero() {
       ref={containerRef}
       className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-[var(--nav-height)]"
     >
-      {/* 3D Scene removed for maximum performance */}
+      {/* High-performance CSS Aurora Background (Replaces 3D Scene) */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40 dark:opacity-30">
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-accent/40 blur-[120px] animate-blob" />
+        <div className="absolute top-[20%] right-[-10%] w-[40%] h-[40%] rounded-full bg-blue-500/20 blur-[120px] animate-blob animation-delay-2000" />
+        <div className="absolute bottom-[-20%] left-[20%] w-[40%] h-[40%] rounded-full bg-purple-500/20 blur-[120px] animate-blob animation-delay-4000" />
+      </div>
 
       {/* Noise overlay */}
       <div

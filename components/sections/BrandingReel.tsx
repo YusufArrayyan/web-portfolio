@@ -162,7 +162,7 @@ export default function BrandingReel() {
 
         {/* Scrolling text row */}
         <motion.div
-          className="mt-20 overflow-hidden"
+          className="mt-20 overflow-hidden py-12 -my-12"
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ delay: 0.5 }}
