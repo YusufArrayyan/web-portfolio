@@ -1,11 +1,10 @@
 'use client'
 
 import { useRef, useState, useEffect, useMemo } from 'react'
-import { motion, useScroll, useTransform, useMotionValue } from 'framer-motion'
+import { motion, useScroll, useTransform, useMotionValue, animate } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { easing, staggerBase, fadeInUp, wordRevealContainer } from '@/lib/animations'
-import { splitWords } from '@/lib/utils'
 
 
 
@@ -21,17 +20,21 @@ interface FloatingCardProps {
   label: string
 }
 
-function FloatingCard({ src, className, rotate, delay, label }: FloatingCardProps) {
+function FloatingCard({ src, className, rotate, delay, label, scrollYProgress }: FloatingCardProps & { scrollYProgress: any }) {
+  // Add subtle parallax effect on scroll based on delay to give them varying speeds
+  const yParallax = useTransform(scrollYProgress, [0, 1], ['0%', `${delay * -100}%`])
+  
   return (
     <motion.div
-      className={`absolute ${className} hidden xl:block`}
+      className={`absolute ${className} hidden xl:block z-0 cursor-pointer`}
       initial={{ opacity: 0, scale: 0.7, rotate: 0 }}
       animate={{ opacity: 1, scale: 1, rotate }}
       transition={{ duration: 1.2, delay, ease: easing.outExpo }}
-      style={{ animation: `float ${5 + delay}s ease-in-out infinite` }}
+      style={{ animation: `float ${5 + delay}s ease-in-out infinite`, y: yParallax }}
+      onClick={() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })}
     >
       <motion.div
-        className="relative w-44 h-56 md:w-52 md:h-64 rounded-2xl overflow-hidden border border-white/10 shadow-2xl"
+        className="relative w-56 h-40 md:w-64 md:h-44 rounded-2xl overflow-hidden border border-white/10 shadow-2xl"
         whileHover={{ scale: 1.06 }}
         transition={{ type: 'spring', stiffness: 300, damping: 25 }}
       >
@@ -60,13 +63,38 @@ function FloatingCard({ src, className, rotate, delay, label }: FloatingCardProp
    Stat Badge
    ============================================================ */
 
-function StatBadge({ value, label }: { value: string; label: string }) {
+function AnimatedNumber({ value }: { value: number }) {
+  const nodeRef = useRef<HTMLSpanElement>(null)
+  const motionValue = useMotionValue(0)
+  const rounded = useTransform(motionValue, (latest) => Math.round(latest))
+
+  useEffect(() => {
+    // Only animate when it comes into view or just delay it slightly
+    const timeout = setTimeout(() => {
+      animate(motionValue, value, { duration: 2.5, ease: easing.outExpo })
+    }, 500)
+    return () => clearTimeout(timeout)
+  }, [value, motionValue])
+
+  useEffect(() => {
+    return rounded.on("change", (v) => {
+      if (nodeRef.current) nodeRef.current.textContent = v.toString()
+    })
+  }, [rounded])
+
+  return <span ref={nodeRef}>0</span>
+}
+
+function StatBadge({ value, label, numValue }: { value: string; label: string; numValue: number }) {
   return (
     <motion.div
       className="flex flex-col items-center gap-1"
       variants={fadeInUp}
     >
-      <span className="font-display text-3xl md:text-4xl font-800 text-accent">{value}</span>
+      <span className="font-display text-3xl md:text-4xl font-800 text-accent flex items-center">
+        <AnimatedNumber value={numValue} />
+        {value.replace(/[0-9]/g, '')}
+      </span>
       <span className="text-[10px] font-mono uppercase tracking-widest text-ink-tertiary">{label}</span>
     </motion.div>
   )
@@ -77,31 +105,46 @@ function StatBadge({ value, label }: { value: string; label: string }) {
    ============================================================ */
 
 function HeroHeadline({ text, delay = 0 }: { text: string; delay?: number }) {
-  const words = useMemo(() => splitWords(text), [text])
+  const words = text.split(' ')
+  let charIndex = 0
 
   return (
     <motion.div
-      className="flex flex-wrap gap-x-[0.2em]"
+      className="flex flex-wrap"
       variants={wordRevealContainer}
       initial="hidden"
       animate="visible"
     >
-      {words.map((word, i) => (
-        <span key={i} className="overflow-hidden inline-block pb-6 -mb-6 pr-16 -mr-16">
-          <motion.span
-            className="inline-block"
-            variants={{
-              hidden: { y: '110%' },
-              visible: {
-                y: '0%',
-                transition: { duration: 0.9, delay: delay + i * 0.04, ease: easing.outExpo },
-              },
-            }}
-          >
-            {word}
-          </motion.span>
-        </span>
-      ))}
+      {words.map((word, wIdx) => {
+        const chars = word.split('')
+        return (
+          <span key={wIdx} className="inline-flex whitespace-nowrap overflow-visible">
+            {chars.map((char, cIdx) => {
+              const currentDelay = delay + (charIndex++) * 0.03
+              return (
+                <span key={cIdx} className="overflow-hidden inline-block pb-6 -mb-6">
+                  <motion.span
+                    className="inline-block"
+                    variants={{
+                      hidden: { y: '110%', opacity: 0 },
+                      visible: {
+                        y: '0%',
+                        opacity: 1,
+                        transition: { duration: 0.8, delay: currentDelay, ease: easing.outExpo },
+                      },
+                    }}
+                  >
+                    {char}
+                  </motion.span>
+                </span>
+              )
+            })}
+            {wIdx !== words.length - 1 && (
+              <span className="inline-block" style={{ width: '0.3em' }}>&nbsp;</span>
+            )}
+          </span>
+        )
+      })}
     </motion.div>
   )
 }
@@ -141,6 +184,8 @@ export default function Hero() {
   const blobX = useTransform(mouseX, [-1000, 1000], [-80, 80])
   const blobY = useTransform(mouseY, [-1000, 1000], [-80, 80])
 
+  // Mascot setup removed as it is now handled internally by InteractiveMascot
+
   return (
     <section
       id="hero"
@@ -169,31 +214,35 @@ export default function Hero() {
       {/* Floating project thumbnail cards — visible on xl+ */}
       <FloatingCard
         src="/projects/aksesnonton_1.png"
-        className="top-[15%] left-[-2%] 2xl:left-[2%] opacity-30 hover:opacity-100 transition-opacity z-0"
+        className="top-[15%] left-[-2%] 2xl:left-[2%] opacity-30 hover:opacity-100 transition-opacity"
         rotate={-8}
         delay={0.6}
         label="AksesNonton"
+        scrollYProgress={scrollYProgress}
       />
       <FloatingCard
         src="/projects/digsi_1.png"
-        className="top-[55%] left-[-2%] 2xl:left-[2%] opacity-30 hover:opacity-100 transition-opacity z-0"
+        className="top-[55%] left-[-2%] 2xl:left-[2%] opacity-30 hover:opacity-100 transition-opacity"
         rotate={5}
         delay={0.8}
         label="DigSi"
+        scrollYProgress={scrollYProgress}
       />
       <FloatingCard
         src="/projects/RyNote_1.png"
-        className="top-[12%] right-[-2%] 2xl:right-[2%] opacity-30 hover:opacity-100 transition-opacity z-0"
+        className="top-[12%] right-[-2%] 2xl:right-[2%] opacity-30 hover:opacity-100 transition-opacity"
         rotate={9}
         delay={0.7}
         label="RyNote"
+        scrollYProgress={scrollYProgress}
       />
       <FloatingCard
         src="/projects/elok_1.png"
-        className="top-[55%] right-[-2%] 2xl:right-[2%] opacity-30 hover:opacity-100 transition-opacity z-0"
+        className="top-[55%] right-[-2%] 2xl:right-[2%] opacity-30 hover:opacity-100 transition-opacity"
         rotate={-6}
         delay={0.9}
         label="Elok Galo"
+        scrollYProgress={scrollYProgress}
       />
 
       {/* Main content */}
@@ -241,10 +290,10 @@ export default function Hero() {
         >
           {/* Description */}
           <motion.p
-            className="max-w-md text-ink-secondary text-base leading-relaxed font-body"
+            className="max-w-md text-ink-secondary text-base leading-relaxed font-body text-justify"
             variants={fadeInUp}
           >
-            Building high-performance web applications with Next.js, TypeScript,
+            Building high performance web applications with Next.js, TypeScript,
             FastAPI & Go — from Bengkulu, Indonesia, for the world.
           </motion.p>
 
@@ -253,42 +302,46 @@ export default function Hero() {
             className="flex flex-wrap items-center gap-4 sm:gap-6 md:gap-12"
             variants={staggerBase}
           >
-            <StatBadge value="10+" label="Projects" />
+            <StatBadge value="10+" numValue={10} label="Projects" />
             <div className="w-[1px] h-8 bg-border hidden sm:block" />
-            <StatBadge value="16+" label="Certs" />
+            <StatBadge value="16+" numValue={16} label="Certs" />
             <div className="w-[1px] h-8 bg-border hidden sm:block" />
-            <StatBadge value="3+" label="Yrs Exp" />
+            <StatBadge value="3+" numValue={3} label="Yrs Exp" />
           </motion.div>
 
-          {/* CTA Buttons */}
+          {/* CTA Buttons & Mascot Area */}
           <motion.div
-            className="flex flex-wrap items-center gap-4 w-full sm:w-auto"
+            className="flex flex-wrap items-center gap-4 w-full sm:w-auto relative"
             variants={fadeInUp}
           >
-            <button
-              className="btn-primary group"
-              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-              aria-label="View my projects"
-            >
-              View Work
-              <svg
-                className="w-4 h-4 group-hover:translate-x-1 transition-transform"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-                aria-hidden="true"
+              <button
+                className="btn-primary group relative overflow-hidden"
+                onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+                aria-label="View my projects"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
+              <span className="relative z-10 flex items-center gap-3">
+                View Work
+                <svg
+                  className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  aria-hidden="true"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </span>
             </button>
-            <button
-              className="btn-secondary group"
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-              aria-label="Go to contact section"
-            >
+              <button
+                className="btn-secondary group border border-border bg-surface hover:bg-elevated"
+                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                aria-label="Go to contact section"
+              >
               Get in touch
             </button>
+
+
           </motion.div>
         </motion.div>
       </motion.div>

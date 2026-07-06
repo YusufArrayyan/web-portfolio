@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef } from 'react'
-import { motion, AnimatePresence, useInView } from 'framer-motion'
+import { motion, AnimatePresence, useInView, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import Image from 'next/image'
 import { projectsData, type Project } from '@/data/projects'
 import { SectionLabel } from '@/components/shared/AnimatedText'
@@ -21,6 +21,21 @@ function ProjectRow({ project, index, onOpen }: {
   const rowRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(rowRef, { once: true, margin: '-5% 0px' })
 
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+  const springConfig = { damping: 25, stiffness: 300, mass: 0.5 }
+  const springX = useSpring(mouseX, springConfig)
+  const springY = useSpring(mouseY, springConfig)
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    // Only update cursor on desktop to prevent mobile lag and sticking
+    if (window.innerWidth < 1024) return;
+    
+    // Add offset so cursor doesn't cover the image
+    mouseX.set(e.clientX + 20)
+    mouseY.set(e.clientY + 20)
+  }
+
   return (
     <motion.div
       ref={rowRef}
@@ -32,13 +47,14 @@ function ProjectRow({ project, index, onOpen }: {
         className="group relative border-b border-border py-8 cursor-pointer"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
+        onMouseMove={handleMouseMove}
         onClick={() => onOpen(project)}
         data-cursor
         data-cursor-label="Open"
       >
         {/* Background hover fill */}
         <motion.div
-          className="absolute inset-0 -mx-6 rounded-2xl"
+          className="absolute inset-0 -mx-6 rounded-2xl hidden lg:block"
           style={{ backgroundColor: project.accentColor }}
           animate={{ opacity: hovered ? 1 : 0 }}
           transition={{ duration: 0.3 }}
@@ -52,15 +68,21 @@ function ProjectRow({ project, index, onOpen }: {
             </span>
           </div>
 
-          {/* Title */}
-          <div className="col-span-12 md:col-span-4">
-            <motion.h3
-              className="font-display text-3xl md:text-4xl font-800 tracking-tighter text-ink"
-              animate={{ x: hovered ? 8 : 0 }}
-              transition={{ duration: 0.3, ease: easing.outExpo }}
-            >
-              {project.title}
-            </motion.h3>
+          {/* Title with Clip Path Reveal */}
+          <div className="col-span-12 md:col-span-4 relative">
+            <div className="relative inline-block overflow-hidden pb-1">
+              <h3 className="font-display text-3xl md:text-4xl font-800 tracking-tighter text-ink lg:text-ink-secondary/30">
+                {project.title}
+              </h3>
+              <motion.h3
+                className="hidden lg:block font-display text-3xl md:text-4xl font-800 tracking-tighter text-ink absolute inset-0 whitespace-nowrap"
+                initial={{ clipPath: 'inset(0 100% 0 0)' }}
+                animate={{ clipPath: hovered ? 'inset(0 0% 0 0)' : 'inset(0 100% 0 0)' }}
+                transition={{ duration: 0.4, ease: easing.outExpo }}
+              >
+                {project.title}
+              </motion.h3>
+            </div>
           </div>
 
           {/* Category + year */}
@@ -92,21 +114,23 @@ function ProjectRow({ project, index, onOpen }: {
           </div>
         </div>
 
-        {/* Thumbnail preview on hover */}
+        {/* Thumbnail preview on hover - Cursor Follower */}
         <AnimatePresence>
           {hovered && (
             <motion.div
-              className="absolute right-16 top-1/2 -translate-y-1/2 w-40 h-28 rounded-xl overflow-hidden border border-border z-20 pointer-events-none hidden xl:block"
-              initial={{ opacity: 0, scale: 0.85, rotate: -4 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              exit={{ opacity: 0, scale: 0.85, rotate: 4 }}
+              className="fixed top-0 left-0 w-64 h-40 rounded-xl overflow-hidden border border-border z-[90] pointer-events-none hidden lg:block"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
               transition={{ duration: 0.25, ease: easing.outExpo }}
+              style={{ x: springX, y: springY }}
             >
               <Image
                 src={project.images[0] || project.image}
                 alt={project.title}
                 fill
                 className="object-cover"
+                sizes="256px"
               />
             </motion.div>
           )}
@@ -145,19 +169,18 @@ function ProjectModal({
 
       {/* Modal */}
       <motion.div
-        className="relative z-10 w-full max-w-5xl max-h-[92vh] bg-surface border border-border rounded-t-4xl md:rounded-4xl overflow-hidden flex flex-col md:flex-row"
+        className="relative z-10 w-full max-w-4xl max-h-[92vh] bg-surface border border-border rounded-t-4xl md:rounded-4xl overflow-hidden flex flex-col"
         variants={drawerVariants}
       >
-        {/* Left — Media */}
-        <div className="relative w-full md:w-1/2 h-64 md:h-auto bg-elevated border-r border-border">
+        {/* Top — Media */}
+        <div className="relative w-full aspect-[16/10] md:aspect-video bg-elevated border-b border-border flex-shrink-0">
           <Image
             src={project.images[activeImg] || project.image}
             alt={project.title}
             fill
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover object-top"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent to-surface/50 hidden md:block" />
-          <div className="absolute inset-0 bg-gradient-to-t from-surface to-transparent md:hidden" />
+          <div className="absolute inset-0 bg-gradient-to-t from-surface to-transparent" />
 
           {/* Year badge */}
           <div className="absolute top-4 left-4">
@@ -166,7 +189,7 @@ function ProjectModal({
         </div>
 
         {/* Right — Content */}
-        <div className="flex-1 overflow-y-auto p-8 md:p-12 flex flex-col gap-6">
+        <div className="flex-1 overflow-y-auto p-8 md:p-12 flex flex-col gap-6" data-lenis-prevent="true">
           {/* Close */}
           <div className="flex items-center justify-between">
             <span className="tag" style={{ color: project.color, borderColor: `${project.color}40` }}>
@@ -186,7 +209,7 @@ function ProjectModal({
             {project.title}
           </h2>
 
-          <p className="text-ink-secondary text-base leading-relaxed font-body">
+          <p className="text-ink-secondary text-base leading-relaxed font-body text-justify">
             {project.longDescription}
           </p>
 

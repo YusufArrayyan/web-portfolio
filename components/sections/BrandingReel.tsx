@@ -18,11 +18,11 @@ const marqueeItems = [
 
 // High-quality aesthetic thumbnails generated for the creative showcase
 const showcaseItems = [
-  { img: '/thumbnails/cinematic.png', label: 'Cinematic', subtitle: 'Visual Storytelling' },
-  { img: '/thumbnails/ambassador.png', label: 'Ambassadorship', subtitle: 'Campus Representation' },
-  { img: '/thumbnails/brand.png', label: 'Brand Selling', subtitle: 'Product Campaign' },
-  { img: '/thumbnails/story.png', label: 'Story Telling', subtitle: 'Narrative Vlog' },
-  { img: '/thumbnails/motion.png', label: 'Motion', subtitle: 'Dynamic Editing' },
+  { img: '/thumbnails/cinematic.png', label: 'Cinematic', subtitle: 'Visual Storytelling', link: 'https://www.youtube.com/@yusufarrayyan' },
+  { img: '/thumbnails/ambassador.png', label: 'Ambassadorship', subtitle: 'Campus Representation', link: 'https://www.youtube.com/@yusufarrayyan' },
+  { img: '/thumbnails/brand.png', label: 'Brand Selling', subtitle: 'Product Campaign', link: 'https://www.youtube.com/@yusufarrayyan' },
+  { img: '/thumbnails/story.png', label: 'Story Telling', subtitle: 'Narrative Vlog', link: 'https://www.youtube.com/@yusufarrayyan' },
+  { img: '/thumbnails/motion.png', label: 'Motion', subtitle: 'Dynamic Editing', link: 'https://www.youtube.com/@yusufarrayyan' },
 ]
 
 /* ============================================================
@@ -33,7 +33,7 @@ function MarqueeTrack({ reverse = false }: { reverse?: boolean }) {
   const items = [...marqueeItems, ...marqueeItems, ...marqueeItems]
 
   return (
-    <div className={`flex gap-4 ${reverse ? 'marquee-track-reverse' : 'marquee-track'}`}>
+    <div className={`flex gap-4 hover:[animation-play-state:paused] ${reverse ? 'marquee-track-reverse' : 'marquee-track'}`}>
       {items.map((item, i) => (
         <div
           key={i}
@@ -155,7 +155,9 @@ export default function BrandingReel() {
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
               transition={{ duration: 0.7, delay: i * 0.1, ease: easing.outExpo }}
             >
-              <ThumbnailCard {...item} />
+              <a href={item.link} target="_blank" rel="noopener noreferrer">
+                <ThumbnailCard {...item} />
+              </a>
             </motion.div>
           ))}
         </div>

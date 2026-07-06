@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 /* ============================================
-   DESIGN SYSTEM — CSS CUSTOM PROPERTIES
+   DESIGN SYSTEM � CSS CUSTOM PROPERTIES
    ============================================ */
 
 :root {
@@ -78,7 +78,7 @@ body {
   cursor: none;
 }
 
-/* Cursor hidden globally — custom cursor takes over on desktop */
+/* Cursor hidden globally � custom cursor takes over on desktop */
 body {
   cursor: none;
 }
@@ -197,15 +197,15 @@ code, pre {
   }
 
   .text-fluid-3xl {
-    font-size: clamp(3rem, 8vw, 7rem);
+    font-size: clamp(2.5rem, 8vw, 7rem);
   }
 
   .text-fluid-4xl {
-    font-size: clamp(4rem, 10vw, 10rem);
+    font-size: clamp(3rem, 10vw, 10rem);
   }
 
   .text-fluid-hero {
-    font-size: clamp(4.5rem, 11vw, 11rem);
+    font-size: clamp(3rem, 11vw, 11rem);
   }
 
   /* Glass surface */
@@ -515,4 +515,52 @@ html.lenis body {
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--text-secondary);
+}
+
+/* ============================================================
+   View Transitions API for Theme Toggle
+   ============================================================ */
+
+::view-transition-group(root) {
+  animation-duration: 1s;
+  animation-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+::view-transition-new(root),
+::view-transition-old(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+.dark::view-transition-old(root) {
+  z-index: 1;
+}
+
+.dark::view-transition-new(root) {
+  z-index: 2;
+  clip-path: circle(0px at var(--x, 50%) var(--y, 50%));
+  animation: expand-circle 1s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+}
+
+/* Light mode transition (contract to pointer or expand opposite) */
+::view-transition-old(root) {
+  z-index: 2;
+  clip-path: circle(100% at var(--x, 50%) var(--y, 50%));
+  animation: contract-circle 1s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+}
+
+::view-transition-new(root) {
+  z-index: 1;
+}
+
+@keyframes expand-circle {
+  to {
+    clip-path: circle(150vmax at var(--x, 50%) var(--y, 50%));
+  }
+}
+
+@keyframes contract-circle {
+  to {
+    clip-path: circle(0px at var(--x, 50%) var(--y, 50%));
+  }
 }

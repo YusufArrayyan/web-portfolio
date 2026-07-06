@@ -26,6 +26,7 @@ const dmMono = DM_Mono({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
   title: 'Rayyan — Full Stack Developer',
   description:
     'Muhammad Yusuf Arrayyan is a Full Stack Developer specializing in Next.js, TypeScript, FastAPI, and Go. Building high-performance web applications from Indonesia.',

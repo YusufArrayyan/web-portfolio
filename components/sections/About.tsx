@@ -73,7 +73,7 @@ export default function About() {
                 src="/profile.jpg"
                 alt="Muhammad Yusuf Arrayyan"
                 fill
-                className="object-cover grayscale opacity-80"
+                className="object-cover grayscale-[50%] opacity-90 group-hover:grayscale-0 transition-all duration-700"
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
               
@@ -103,18 +103,18 @@ export default function About() {
               />
 
               {/* Overlay gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/20 to-transparent z-20 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/10 to-transparent z-20 pointer-events-none" />
 
               {/* Accent overlay */}
               <motion.div
-                className="absolute inset-0 bg-accent/10 mix-blend-overlay"
-                animate={{ opacity: [0.1, 0.2, 0.1] }}
+                className="absolute inset-0 bg-accent/5 mix-blend-overlay pointer-events-none"
+                animate={{ opacity: [0.05, 0.1, 0.05] }}
                 transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
               />
 
-              {/* Stats overlay card */}
+              {/* Stats overlay card — DESKTOP ONLY (inside the image) */}
               <motion.div
-                className="absolute bottom-6 left-6 right-6 glass rounded-2xl p-5"
+                className="absolute bottom-6 left-6 right-6 glass rounded-2xl p-5 hidden md:block z-30"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ delay: 0.6, ease: easing.outExpo }}
@@ -131,6 +131,25 @@ export default function About() {
                 </div>
               </motion.div>
             </div>
+
+            {/* Stats card — MOBILE ONLY (below the image) */}
+            <motion.div
+              className="mt-6 glass rounded-2xl p-5 md:hidden"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ delay: 0.6, ease: easing.outExpo }}
+            >
+              <div className="grid grid-cols-2 gap-4">
+                {stats.map((s) => (
+                  <div key={s.label} className="text-center">
+                    <p className="font-display text-2xl font-800 text-accent">{s.value}</p>
+                    <p className="text-[10px] font-mono uppercase tracking-widest text-ink-secondary mt-1">
+                      {s.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
 
             {/* Location badge */}
             <motion.div
@@ -191,37 +210,43 @@ export default function About() {
                     tag="h2"
                   />
 
-                  <div className="space-y-5">
+                  <div className="space-y-5 text-justify">
                     <p className="text-ink-secondary text-base leading-relaxed font-body">
-                      I'm <span className="text-ink font-500">Muhammad Yusuf Arrayyan</span> — a Full Stack Developer
+                      I am <span className="text-ink font-500">Muhammad Yusuf Arrayyan</span>, a Full Stack Developer
                       studying Informatics Engineering at{' '}
                       <span className="text-ink font-500">Universitas Bengkulu</span>. I build
-                      end-to-end web applications using modern tools like Next.js, FastAPI, TypeScript,
+                      end to end web applications using modern tools like Next.js, FastAPI, TypeScript,
                       and Go.
                     </p>
                     <p className="text-ink-secondary text-base leading-relaxed font-body">
-                      Beyond code, I'm passionate about{' '}
-                      <span className="text-ink font-500">cinematography and content creation</span> —
-                      blending technical engineering with creative storytelling. Currently working on
-                      award-winning EdTech platforms and SaaS products.
+                      Beyond code, I am passionate about{' '}
+                      <span className="text-ink font-500">cinematography and content creation</span>,
+                      blending technical engineering with creative storytelling. I am currently working on
+                      award winning EdTech platforms and SaaS products.
                     </p>
                   </div>
 
-                  {/* Info grid */}
-                  <div className="grid grid-cols-2 gap-4">
-                    {[
-                      { label: 'Location', value: 'Bengkulu, Indonesia' },
-                      { label: 'Focus', value: 'Full Stack Engineering' },
-                      { label: 'Education', value: 'Informatics Engineering, UNIB' },
-                      { label: 'Languages', value: 'Indonesian, English' },
-                    ].map((item) => (
-                      <div key={item.label} className="border border-border rounded-2xl p-4">
-                        <p className="text-[10px] font-mono uppercase tracking-widest text-ink-tertiary mb-2">
-                          {item.label}
-                        </p>
-                        <p className="text-sm font-body text-ink font-500">{item.value}</p>
+                  {/* Bento-style Info grid */}
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="col-span-3 sm:col-span-2 border border-border rounded-2xl p-5 flex flex-col justify-end bg-gradient-to-br from-white/[0.03] to-transparent hover:bg-white/[0.05] transition-colors">
+                      <p className="text-[10px] font-mono uppercase tracking-widest text-ink-tertiary mb-2">Focus</p>
+                      <p className="text-base font-body text-ink font-500">Full Stack Engineering & Systems Design</p>
+                    </div>
+                    <div className="col-span-3 sm:col-span-1 border border-border rounded-2xl p-5 hover:bg-white/[0.02] transition-colors flex flex-col justify-end">
+                      <p className="text-[10px] font-mono uppercase tracking-widest text-ink-tertiary mb-2">Location</p>
+                      <p className="text-base font-body text-ink font-500">Bengkulu, ID</p>
+                    </div>
+                    <div className="col-span-3 sm:col-span-3 md:col-span-1 border border-border rounded-2xl p-5 hover:bg-white/[0.02] transition-colors">
+                      <p className="text-[10px] font-mono uppercase tracking-widest text-ink-tertiary mb-2">Languages</p>
+                      <p className="text-sm font-body text-ink font-500">Indonesian, English</p>
+                    </div>
+                    <div className="col-span-3 sm:col-span-3 md:col-span-2 border border-border rounded-2xl p-5 hover:bg-white/[0.02] transition-colors flex flex-col justify-end relative overflow-hidden">
+                      <div className="absolute top-0 right-0 -mr-4 -mt-4 opacity-5">
+                        <svg width="100" height="100" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9L12 15L21 10.09V17H23V9M5 13.18V17.18L12 21L19 17.18V13.18L12 17L5 13.18Z"/></svg>
                       </div>
-                    ))}
+                      <p className="text-[10px] font-mono uppercase tracking-widest text-ink-tertiary mb-2 relative z-10">Education</p>
+                      <p className="text-sm font-body text-ink font-500 relative z-10">Informatics Engineering, Universitas Bengkulu</p>
+                    </div>
                   </div>
 
                   {/* CV download */}

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTheme } from 'next-themes'
@@ -101,15 +101,33 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* CTA & Theme */}
-          <div className="hidden md:flex items-center gap-4">
+          {/* Right side controls */}
+          <div className="flex items-center gap-2 md:gap-4">
+            {/* Theme Toggle (visible on all screen sizes) */}
             {mounted && (
               <motion.button
-                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-ink-secondary hover:text-ink hover:bg-white/5 transition-colors"
+                onClick={(e: React.MouseEvent) => {
+                  const newTheme = theme === 'dark' ? 'light' : 'dark'
+                  
+                  if (!document.startViewTransition) {
+                    setTheme(newTheme)
+                    return
+                  }
+
+                  const x = e.clientX
+                  const y = e.clientY
+                  document.documentElement.style.setProperty('--x', `${x}px`)
+                  document.documentElement.style.setProperty('--y', `${y}px`)
+
+                  document.startViewTransition(() => {
+                    setTheme(newTheme)
+                  })
+                }}
+                className="w-10 h-10 rounded-full border border-border flex items-center justify-center hover:bg-white/5 text-ink-secondary hover:text-ink transition-colors overflow-hidden"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.55 }}
+                aria-label="Toggle theme"
               >
                 {theme === 'dark' ? (
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -122,67 +140,70 @@ export default function Navbar() {
                 )}
               </motion.button>
             )}
-            
-            <motion.a
-              href="/MuhammadYusufArrayyan_UniversitasBengkulu__CV.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs font-mono uppercase tracking-widest text-ink-secondary hover:text-ink transition-colors duration-300"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-            >
-              CV
-            </motion.a>
-            <motion.a
-              href="/MuhammadYusufArrayyan_UniversitasBengkulu_Portfolio.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs font-mono uppercase tracking-widest text-ink-secondary hover:text-ink transition-colors duration-300"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.62 }}
-            >
-              Portfolio
-            </motion.a>
+
+            {/* Desktop CTAs */}
+            <div className="hidden md:flex items-center gap-4">
+              <motion.a
+                href="/MuhammadYusufArrayyan_UniversitasBengkulu__CV.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-mono uppercase tracking-widest text-ink-secondary hover:text-ink transition-colors duration-300"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6 }}
+              >
+                CV
+              </motion.a>
+              <motion.a
+                href="/MuhammadYusufArrayyan_UniversitasBengkulu_Portfolio.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-mono uppercase tracking-widest text-ink-secondary hover:text-ink transition-colors duration-300"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.62 }}
+              >
+                Portfolio
+              </motion.a>
+              <motion.button
+                className="btn-primary text-xs py-3 px-6"
+                onClick={() => scrollTo('#contact')}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.65, ease: easing.outExpo }}
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.96 }}
+              >
+                Hire me
+              </motion.button>
+            </div>
+
+            {/* Mobile hamburger */}
             <motion.button
-              className="btn-primary text-xs py-3 px-6"
-              onClick={() => scrollTo('#contact')}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.65, ease: easing.outExpo }}
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.96 }}
+              className="md:hidden flex flex-col gap-[5px] p-2 ml-2"
+              onClick={() => setMenuOpen(!menuOpen)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              aria-label="Toggle menu"
             >
-              Hire me
+              <motion.span
+                className="w-6 h-[1.5px] bg-ink block"
+                animate={menuOpen ? { rotate: 45, y: 6.5 } : { rotate: 0, y: 0 }}
+                transition={{ duration: 0.3, ease: easing.outExpo }}
+              />
+              <motion.span
+                className="w-6 h-[1.5px] bg-ink block"
+                animate={menuOpen ? { opacity: 0, x: -10 } : { opacity: 1, x: 0 }}
+                transition={{ duration: 0.2 }}
+              />
+              <motion.span
+                className="w-6 h-[1.5px] bg-ink block"
+                animate={menuOpen ? { rotate: -45, y: -6.5 } : { rotate: 0, y: 0 }}
+                transition={{ duration: 0.3, ease: easing.outExpo }}
+              />
             </motion.button>
           </div>
-
-          {/* Mobile hamburger */}
-          <motion.button
-            className="md:hidden flex flex-col gap-[5px] p-2"
-            onClick={() => setMenuOpen(!menuOpen)}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            aria-label="Toggle menu"
-          >
-            <motion.span
-              className="w-6 h-[1.5px] bg-ink block"
-              animate={menuOpen ? { rotate: 45, y: 6.5 } : { rotate: 0, y: 0 }}
-              transition={{ duration: 0.3, ease: easing.outExpo }}
-            />
-            <motion.span
-              className="w-6 h-[1.5px] bg-ink block"
-              animate={menuOpen ? { opacity: 0, x: -10 } : { opacity: 1, x: 0 }}
-              transition={{ duration: 0.2 }}
-            />
-            <motion.span
-              className="w-6 h-[1.5px] bg-ink block"
-              animate={menuOpen ? { rotate: -45, y: -6.5 } : { rotate: 0, y: 0 }}
-              transition={{ duration: 0.3, ease: easing.outExpo }}
-            />
-          </motion.button>
         </div>
       </motion.nav>
 
@@ -190,7 +211,7 @@ export default function Navbar() {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            className="fixed inset-0 z-40 bg-bg flex flex-col justify-between"
+            className="fixed inset-0 z-40 bg-bg flex flex-col justify-between overflow-x-hidden"
             initial={{ clipPath: 'inset(0 0 100% 0)' }}
             animate={{ clipPath: 'inset(0 0 0% 0)' }}
             exit={{ clipPath: 'inset(0 0 100% 0)' }}
@@ -200,7 +221,7 @@ export default function Navbar() {
               {navLinks.map((link, i) => (
                 <motion.button
                   key={link.label}
-                  className="text-left font-display text-6xl font-800 text-ink-secondary hover:text-accent transition-colors duration-200 py-2 border-b border-border"
+                  className="text-left font-display text-4xl sm:text-5xl font-800 text-ink-secondary hover:text-accent transition-colors duration-200 py-2 border-b border-border"
                   onClick={() => scrollTo(link.href)}
                   initial={{ opacity: 0, x: -40 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -213,9 +234,9 @@ export default function Navbar() {
             </div>
 
             {/* Bottom row */}
-            <div className="container-main pb-12 flex items-center justify-between">
+            <div className="container-main pb-12 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <motion.div
-                className="flex gap-6"
+                className="flex gap-6 flex-wrap"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4 }}
@@ -230,20 +251,20 @@ export default function Navbar() {
                   </a>
                 ))}
               </motion.div>
-              <motion.div className="flex items-center gap-4" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45 }}>
+              <motion.div className="flex items-center gap-3 flex-wrap" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45 }}>
                 <a
                   href="/MuhammadYusufArrayyan_UniversitasBengkulu__CV.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-secondary text-xs py-3 px-6"
+                  className="btn-secondary text-xs py-3 px-5"
                 >
-                  Download CV
+                  CV
                 </a>
                 <a
                   href="/MuhammadYusufArrayyan_UniversitasBengkulu_Portfolio.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-primary text-xs py-3 px-6"
+                  className="btn-primary text-xs py-3 px-5"
                 >
                   Portfolio
                 </a>

@@ -11,6 +11,42 @@ export interface Certificate {
 
 export const certificatesData: Certificate[] = [
   {
+    id: 101,
+    title: 'AI Fundamental',
+    issuer: 'Microsoft',
+    category: 'Technical',
+    year: '2025',
+    image: '/certificates/placeholder.png',
+    color: '#00A4EF',
+  },
+  {
+    id: 102,
+    title: 'Fundamental of Machine Learning',
+    issuer: 'Microsoft',
+    category: 'Technical',
+    year: '2025',
+    image: '/certificates/placeholder.png',
+    color: '#00A4EF',
+  },
+  {
+    id: 103,
+    title: 'Fundamental of Facial Recognition',
+    issuer: 'Microsoft',
+    category: 'Technical',
+    year: '2025',
+    image: '/certificates/placeholder.png',
+    color: '#00A4EF',
+  },
+  {
+    id: 104,
+    title: 'Mastering and Learning HTML',
+    issuer: 'Mammoth Interactive (ZilLearn)',
+    category: 'Courses & Webinars',
+    year: '2024',
+    image: '/certificates/placeholder.png',
+    color: '#E34F26',
+  },
+  {
     id: 1,
     title: 'AWS Containers',
     issuer: 'Amazon Web Services (AWS)',

@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, useRef } from 'react'
-import { motion, useInView, AnimatePresence } from 'framer-motion'
+import { useState, useRef, useEffect } from 'react'
+import { motion, useInView, AnimatePresence, useScroll } from 'framer-motion'
 import Image from 'next/image'
+import dynamic from 'next/dynamic'
 import { experienceData, type ExperienceItem, educationData, type Education } from '@/data/experience'
 import { SectionLabel } from '@/components/shared/AnimatedText'
 import { easing } from '@/lib/animations'
@@ -11,10 +12,10 @@ import { easing } from '@/lib/animations'
    Experience Item
    ============================================================ */
 
-function ExpItem({ item, index }: { item: ExperienceItem; index: number }) {
+function ExpItem({ item, index, isPresent }: { item: ExperienceItem; index: number; isPresent?: boolean }) {
   const [expanded, setExpanded] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-5% 0px' })
+  const isInView = useInView(ref, { once: true, margin: '-20% 0px' })
 
   const typeColor =
     item.type === 'Work'
@@ -30,7 +31,7 @@ function ExpItem({ item, index }: { item: ExperienceItem; index: number }) {
       className="relative"
     >
       {/* Timeline dot */}
-      <div className="absolute left-0 top-6 w-2 h-2 rounded-full bg-border">
+      <div className="absolute left-[-3px] top-6 w-2 h-2 rounded-full bg-border z-10">
         <motion.div
           className="absolute inset-0 rounded-full bg-accent"
           animate={{ scale: isInView ? [0, 1.4, 1] : 0 }}
@@ -38,8 +39,9 @@ function ExpItem({ item, index }: { item: ExperienceItem; index: number }) {
         />
       </div>
 
+
       {/* Content */}
-      <div className="pl-8 pb-12 border-l border-border ml-1 last:pb-0 last:border-transparent">
+      <div className="pl-8 pb-12 ml-1 last:pb-0">
         {/* Header row */}
         <button
           className="w-full text-left group"
@@ -145,7 +147,7 @@ function EducationItem({ item, index }: { item: Education; index: number }) {
       transition={{ duration: 0.6, delay: index * 0.06, ease: easing.outExpo }}
       className="relative"
     >
-      <div className="absolute left-0 top-6 w-2 h-2 rounded-full bg-border">
+      <div className="absolute left-[-3px] top-6 w-2 h-2 rounded-full bg-border z-10">
         <motion.div
           className="absolute inset-0 rounded-full bg-accent"
           animate={{ scale: isInView ? [0, 1.4, 1] : 0 }}
@@ -153,7 +155,7 @@ function EducationItem({ item, index }: { item: Education; index: number }) {
         />
       </div>
 
-      <div className="pl-8 pb-12 border-l border-border ml-1 last:pb-0 last:border-transparent">
+      <div className="pl-8 pb-12 ml-1 last:pb-0">
         <div className="w-full text-left">
           <div className="flex flex-col gap-1">
             <span className="font-mono text-xs text-ink-tertiary uppercase tracking-widest">
@@ -192,6 +194,12 @@ function EducationItem({ item, index }: { item: Education; index: number }) {
 export default function Experience() {
   const sectionRef = useRef<HTMLElement>(null)
   const isInView = useInView(sectionRef, { once: true, margin: '-10% 0px' })
+
+  const timelineRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ['start center', 'end center']
+  })
 
   const workItems = experienceData.filter((e) => e.type === 'Work')
   const orgItems = experienceData.filter((e) => e.type === 'Organization')
@@ -232,27 +240,35 @@ export default function Experience() {
           </div>
 
           {/* Timeline entries */}
-          <div className="xl:w-7/12">
+          <div className="xl:w-7/12 relative pb-8" ref={timelineRef}>
+            {/* Scroll-linked progress line */}
+            <div className="absolute top-6 bottom-0 left-0 w-px bg-border ml-[1px]">
+              <motion.div
+                className="w-full bg-accent origin-top"
+                style={{ scaleY: scrollYProgress, height: '100%' }}
+              />
+            </div>
+
             <div className="mb-16">
-              <p className="text-[10px] font-mono uppercase tracking-widest text-accent mb-8">
+              <p className="text-[10px] font-mono uppercase tracking-widest text-accent mb-8 pl-8">
                 Work Experience
               </p>
               {workItems.map((item, i) => (
-                <ExpItem key={item.id} item={item} index={i} />
+                <ExpItem key={item.id} item={item} index={i} isPresent={item.date.toUpperCase().includes('PRESENT')} />
               ))}
             </div>
 
             <div className="mt-12">
-              <p className="text-[10px] font-mono uppercase tracking-widest text-ink-tertiary mb-8">
+              <p className="text-[10px] font-mono uppercase tracking-widest text-ink-tertiary mb-8 pl-8">
                 Organizations & Activities
               </p>
               {orgItems.map((item, i) => (
-                <ExpItem key={item.id} item={item} index={i} />
+                <ExpItem key={item.id} item={item} index={i} isPresent={item.date.toUpperCase().includes('PRESENT')} />
               ))}
             </div>
 
             <div className="mt-12">
-              <p className="text-[10px] font-mono uppercase tracking-widest text-accent mb-8">
+              <p className="text-[10px] font-mono uppercase tracking-widest text-accent mb-8 pl-8">
                 Education
               </p>
               {educationData.map((item, i) => (

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef } from 'react'
-import { motion, AnimatePresence, useInView } from 'framer-motion'
+import { motion, AnimatePresence, useInView, useMotionValue, useTransform } from 'framer-motion'
 import Image from 'next/image'
 import { certificatesData, type Certificate } from '@/data/certificates'
 import { SectionLabel } from '@/components/shared/AnimatedText'
@@ -19,14 +19,38 @@ function CertCard({ cert, index, onOpen }: {
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true, margin: '-5% 0px' })
 
+  // 3D Tilt Logic
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect()
+    // Normalize coordinates from -1 to 1 based on mouse position within the card
+    const mouseX = (event.clientX - rect.left - rect.width / 2) / (rect.width / 2)
+    const mouseY = (event.clientY - rect.top - rect.height / 2) / (rect.height / 2)
+    x.set(mouseX)
+    y.set(mouseY)
+  }
+
+  const handleMouseLeave = () => {
+    x.set(0)
+    y.set(0)
+  }
+
+  const rotateX = useTransform(y, [-1, 1], [8, -8])
+  const rotateY = useTransform(x, [-1, 1], [-8, 8])
+
   return (
     <motion.div
       ref={ref}
       initial={{ opacity: 0, scale: 0.9, y: 20 }}
       animate={isInView ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.9, y: 20 }}
       transition={{ duration: 0.5, delay: (index % 6) * 0.05, ease: easing.outExpo }}
-      whileHover={{ y: -6, scale: 1.02 }}
-      className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-border cursor-pointer group"
+      whileHover={{ scale: 1.02 }}
+      style={{ rotateX, rotateY, perspective: 1000, transformStyle: "preserve-3d" }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="relative aspect-[3/4] h-full w-full rounded-2xl overflow-hidden border border-border cursor-pointer group"
       onClick={() => onOpen(cert)}
       data-cursor
       data-cursor-label="View"
@@ -214,7 +238,7 @@ export default function Certificates() {
         {/* Grid */}
         <motion.div
           layout
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3"
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 grid-flow-dense"
         >
           <AnimatePresence mode="popLayout">
             {filtered.map((cert, i) => (
@@ -225,6 +249,7 @@ export default function Certificates() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.3 }}
+                className={i === 0 || i === 7 ? 'col-span-2 row-span-2' : 'col-span-1'}
               >
                 <CertCard cert={cert} index={i} onOpen={setSelected} />
               </motion.div>

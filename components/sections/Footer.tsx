@@ -110,16 +110,23 @@ export default function Footer() {
 
       {/* Giant wordmark at bottom */}
       <div className="overflow-hidden border-t border-border">
-        <motion.p
-          className="font-display font-800 text-[8vw] tracking-tightest text-ink-tertiary/10 uppercase text-center leading-none py-6 select-none"
+        <div
+          className="font-display font-800 text-[8vw] tracking-tightest text-ink-tertiary/10 uppercase flex justify-center leading-none py-6 select-none"
           style={{ letterSpacing: '-0.05em' }}
-          initial={{ y: '100%' }}
-          whileInView={{ y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: easing.outExpo }}
         >
-          Rayyan
-        </motion.p>
+          {'RAYYAN'.split('').map((char, i) => (
+            <motion.span
+              key={i}
+              initial={{ y: '100%' }}
+              whileInView={{ y: '0%' }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: i * 0.05, ease: easing.outExpo }}
+              className="inline-block"
+            >
+              {char}
+            </motion.span>
+          ))}
+        </div>
       </div>
     </footer>
   )

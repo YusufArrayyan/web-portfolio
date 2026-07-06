@@ -156,7 +156,7 @@ export default function Cursor() {
               : cursorState === 'text'
               ? '#f0ede8'
               : '#f0ede8',
-          mixBlendMode: cursorState === 'hover' ? 'normal' : 'difference',
+          mixBlendMode: 'difference',
         }}
         transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
       >

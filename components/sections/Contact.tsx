@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { motion, useInView, useMotionValue, useSpring } from 'framer-motion'
 import { SectionLabel } from '@/components/shared/AnimatedText'
 import { easing, fadeInUp } from '@/lib/animations'
 
@@ -58,6 +58,41 @@ const contactLinks = [
   },
 ]
 
+function MagneticWrapper({ children }: { children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+
+  const springX = useSpring(x, { stiffness: 150, damping: 15, mass: 0.1 })
+  const springY = useSpring(y, { stiffness: 150, damping: 15, mass: 0.1 })
+
+  const handleMouse = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!ref.current) return
+    const { clientX, clientY } = e
+    const { height, width, left, top } = ref.current.getBoundingClientRect()
+    const middleX = clientX - (left + width / 2)
+    const middleY = clientY - (top + height / 2)
+    x.set(middleX * 0.2)
+    y.set(middleY * 0.2)
+  }
+
+  const reset = () => {
+    x.set(0)
+    y.set(0)
+  }
+
+  return (
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouse}
+      onMouseLeave={reset}
+      style={{ x: springX, y: springY }}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
 export default function Contact() {
   const sectionRef = useRef<HTMLElement>(null)
   const isInView = useInView(sectionRef, { once: true, margin: '-10% 0px' })
@@ -110,39 +145,44 @@ export default function Contact() {
           transition={{ delay: 0.3, ease: easing.outExpo }}
         >
           {contactLinks.map((contact, i) => (
-            <motion.a
+            <motion.div
               key={contact.label}
-              href={contact.href}
-              target={contact.href.startsWith('mailto') ? undefined : '_blank'}
-              rel={contact.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
-              className="group relative flex items-center gap-5 p-6 rounded-3xl border border-border bg-elevated/50 hover:border-accent/30 hover:bg-accent/5 transition-all duration-300"
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ delay: 0.3 + i * 0.07, ease: easing.outExpo }}
-              aria-label={`Contact via ${contact.label}: ${contact.value}`}
             >
-              <div className="w-12 h-12 rounded-2xl bg-bg border border-border flex items-center justify-center text-ink-secondary group-hover:bg-accent group-hover:text-bg group-hover:border-accent transition-all duration-300 flex-shrink-0">
-                {contact.icon}
-              </div>
-              <div className="min-w-0">
-                <p className="text-[10px] font-mono uppercase tracking-widest text-ink-tertiary mb-1">
-                  {contact.label}
-                </p>
-                <p className="text-sm font-body text-ink group-hover:text-accent transition-colors truncate">
-                  {contact.value}
-                </p>
-              </div>
-              <svg
-                className="w-4 h-4 text-ink-tertiary group-hover:text-accent ml-auto flex-shrink-0 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-                aria-hidden="true"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
-            </motion.a>
+              <MagneticWrapper>
+                <a
+                  href={contact.href}
+                  target={contact.href.startsWith('mailto') ? undefined : '_blank'}
+                  rel={contact.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+                  className="group relative flex items-center gap-5 p-6 rounded-3xl border border-border bg-elevated/50 hover:border-accent/30 hover:bg-accent/5 transition-all duration-300 w-full"
+                  aria-label={`Contact via ${contact.label}: ${contact.value}`}
+                >
+                  <div className="w-12 h-12 rounded-2xl bg-bg border border-border flex items-center justify-center text-ink-secondary group-hover:bg-accent group-hover:text-bg group-hover:border-accent transition-all duration-300 flex-shrink-0">
+                    {contact.icon}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-[10px] font-mono uppercase tracking-widest text-ink-tertiary mb-1">
+                      {contact.label}
+                    </p>
+                    <p className="text-sm font-body text-ink group-hover:text-accent transition-colors truncate">
+                      {contact.value}
+                    </p>
+                  </div>
+                  <svg
+                    className="w-4 h-4 text-ink-tertiary group-hover:text-accent ml-auto flex-shrink-0 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    aria-hidden="true"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+              </MagneticWrapper>
+            </motion.div>
           ))}
         </motion.div>
 
@@ -158,7 +198,7 @@ export default function Contact() {
           </p>
           <a
             href="mailto:rayyankerz@gmail.com"
-            className="font-display text-fluid-xl font-800 tracking-tight text-ink hover:text-accent transition-colors duration-300 underline decoration-accent/30 underline-offset-8 hover:decoration-accent"
+            className="font-display text-[clamp(1rem,6vw,2.5rem)] md:text-fluid-xl font-800 tracking-tight text-ink hover:text-accent transition-colors duration-300 underline decoration-accent/30 underline-offset-4 hover:decoration-accent"
           >
             rayyankerz@gmail.com
           </a>
